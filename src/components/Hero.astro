@@ -7,11 +7,15 @@ import Ornament from "./ui/Ornament.astro";
   <div class="hero-bg-layer" aria-hidden="true">
     <div class="hero-glow hero-glow-a" id="hero-glow-a"></div>
     <div class="hero-glow hero-glow-b" id="hero-glow-b"></div>
+    <div class="hero-glow hero-glow-c" id="hero-glow-c"></div>
     <div class="hero-ambient-shift"></div>
     <div class="hero-motif-dots"></div>
+    <div class="hero-sheen"></div>
   </div>
 
   <canvas id="motif-canvas" role="img" aria-label="Animasi partikel membentuk motif batik Surabaya"></canvas>
+
+  <audio id="soundtrack" src="/soundtrack.mp3" loop preload="auto"></audio>
 
   <div class="hero-gradient-overlay"></div>
 
@@ -132,6 +136,22 @@ import Ornament from "./ui/Ornament.astro";
   :global([data-theme="light"]) .hero-glow-b {
     background: radial-gradient(circle, rgba(15, 138, 107, 0.07), transparent 70%);
   }
+  .hero-glow-c {
+    width: 40vw; height: 40vw;
+    max-width: 600px; max-height: 600px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.06), transparent 60%);
+    animation: glowPulse 6s ease-in-out infinite alternate;
+  }
+  :global([data-theme="light"]) .hero-glow-c {
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.04), transparent 60%);
+  }
+
+  @keyframes glowPulse {
+    0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
+    100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
+  }
 
   .hero-ambient-shift {
     position: absolute;
@@ -177,7 +197,40 @@ import Ornament from "./ui/Ornament.astro";
     background-position: 0 0, 19px 19px, 38px 38px;
   }
 
-  #motif-canvas {
+  .hero-sheen {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.15;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(212, 175, 55, 0.03) 30%,
+      rgba(246, 241, 233, 0.04) 50%,
+      rgba(212, 175, 55, 0.03) 70%,
+      transparent 100%
+    );
+    animation: sheenSlide 8s ease-in-out infinite alternate;
+  }
+  :global([data-theme="light"]) .hero-sheen {
+    opacity: 0.08;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(122, 92, 16, 0.02) 30%,
+      rgba(42, 39, 34, 0.03) 50%,
+      rgba(122, 92, 16, 0.02) 70%,
+      transparent 100%
+    );
+  }
+
+  @keyframes sheenSlide {
+    0% { transform: translateX(-30%) translateY(-20%) rotate(-15deg); }
+    100% { transform: translateX(30%) translateY(20%) rotate(15deg); }
+  }
+
+  .hero-ambient-shift {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -256,9 +309,15 @@ import Ornament from "./ui/Ornament.astro";
     color: var(--color-ivory);
     margin: 0 0 1.2rem 0;
     position: relative;
+    text-shadow:
+      0 0 40px rgba(212, 175, 55, 0.08),
+      0 0 80px rgba(212, 175, 55, 0.04);
   }
   :global([data-theme="light"]) .hero-title {
     color: #1a1a1a;
+    text-shadow:
+      0 0 40px rgba(122, 92, 16, 0.06),
+      0 0 80px rgba(122, 92, 16, 0.03);
   }
 
   .title-decor {
@@ -488,8 +547,9 @@ import Ornament from "./ui/Ornament.astro";
     100% { opacity: 1; clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); transform: translateX(0); }
   }
   @keyframes softGlowPulse {
-    0% { filter: brightness(1); }
-    100% { filter: brightness(1.35); }
+    0% { filter: brightness(1) drop-shadow(0 0 0px rgba(212, 175, 55, 0)); }
+    50% { filter: brightness(1.2) drop-shadow(0 0 6px rgba(212, 175, 55, 0.15)); }
+    100% { filter: brightness(1.35) drop-shadow(0 0 12px rgba(212, 175, 55, 0.1)); }
   }
   @keyframes fadeIn {
     from { opacity: 0; }

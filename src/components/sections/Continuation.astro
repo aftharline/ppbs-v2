@@ -81,12 +81,6 @@ const logos = Array.from({ length: 36 }, (_, i) => ({
   height: 1000,
 }));
 
-const motifs = [
-  { name: "Semanggi", note: "Ketahanan dan rasa guyub warga kota.", src: "/motif/semanggi.webp", width: 778, height: 469 },
-  { name: "Sawunggaling", note: "Keberanian, daya juang, dan martabat.", src: "/motif/sawunggaling.jpg", width: 300, height: 300 },
-  { name: "Pesisir", note: "Pertemuan warna, pelabuhan, dan cerita dagang.", src: "/motif/pesisir.jpeg", width: 1200, height: 900 },
-];
-
 const experiences = [
   "Workshop batik dan literasi motif untuk komunitas muda.",
   "Kurasi visual untuk kampanye budaya dan acara kota.",
@@ -95,10 +89,10 @@ const experiences = [
 ];
 
 const gallery = [
-  { src: "/figure.webp", alt: "Visual batik bernuansa pembuka", label: "Motif", width: 1385, height: 924 },
-  { src: "/figure.webp", alt: "Visual rangkaian batik Surabaya", label: "Ragam", width: 1385, height: 924 },
-  { src: "/figure.webp", alt: "Visual detail sekuens batik", label: "Detail", width: 1385, height: 924 },
-  { src: "/figure.webp", alt: "Visual klimaks narasi batik", label: "Panggung", width: 1385, height: 924 },
+  { src: "/motif.webp", alt: "Visual batik bernuansa pembuka", label: "Motif", width: 1385, height: 924 },
+  { src: "/ragam.webp", alt: "Visual rangkaian batik Surabaya", label: "Ragam", width: 1385, height: 924 },
+  { src: "/detail.webp", alt: "Visual detail sekuens batik", label: "Detail", width: 1385, height: 924 },
+  { src: "/panggung.webp", alt: "Visual klimaks narasi batik", label: "Panggung", width: 1385, height: 924 },
 ];
 ---
 
@@ -234,19 +228,38 @@ const gallery = [
       <span class="t-eyebrow">Arsip Motif</span>
       <h2 class="section-title">Setiap garis menyimpan <span>alamat pulang</span>.</h2>
     </div>
-    <div class="motif-grid" data-reveal-group>
-      {motifs.map((motif) => (
-        <article class="motif-card">
-          <img src={motif.src} alt={`Motif ${motif.name}`} loading="lazy" width={motif.width} height={motif.height} />
-          <div>
-            <h3>{motif.name}</h3>
-            <p>{motif.note}</p>
-          </div>
-        </article>
-      ))}
+    <div class="motif-archive-cta">
+      <button class="archive-btn" id="archive-btn" type="button">
+        <span class="archive-btn-bg" aria-hidden="true"></span>
+        <span class="archive-btn-shine" aria-hidden="true"></span>
+        <span class="archive-btn-content">
+          <svg class="archive-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span class="archive-btn-label">Masuk ke Galeri Batik Surabaya</span>
+          <svg class="archive-btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
     </div>
   </div>
 </section>
+
+<dialog class="archive-modal" id="archive-modal" aria-labelledby="archive-modal-title">
+  <div class="modal-sigil" aria-hidden="true"></div>
+  <button class="modal-close" type="button" data-archive-close aria-label="Tutup">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <span class="t-eyebrow">Galeri Batik</span>
+  <h2 id="archive-modal-title">Segera Hadir</h2>
+  <p>
+    Galeri Batik Surabaya sedang dalam tahap pengembangan dan akan segera hadir.
+    Nantikan ruang digital yang akan menampilkan koleksi motif, sejarah, dan
+    cerita di balik setiap helai batik Surabaya.
+  </p>
+  <button class="modal-action" type="button" data-archive-close>Siap, saya tunggu</button>
+</dialog>
 
 <section class="living section-shell">
   <div class="section-inner living-inner">
@@ -391,6 +404,16 @@ const gallery = [
       Susunan organisasi Putera Puteri Batik Surabaya yang menjadi tulang punggung gerakan budaya.
     </p>
     <div class="org-chart">
+      <div class="org-node org-director">
+        <span class="org-label">Dewan Direksi</span>
+      </div>
+      <div class="org-line-v"></div>
+
+      <div class="org-node org-advisor">
+        <span class="org-label">Dewan Penasihat</span>
+      </div>
+      <div class="org-line-v"></div>
+
       <div class="org-node org-root">
         <span class="org-label">Ketua Umum</span>
       </div>
@@ -407,7 +430,7 @@ const gallery = [
         <div class="org-node">
           <span class="org-label">Sekretaris</span>
         </div>
-        <div class="org-spacer"></div>
+        <div class="org-line-h"></div>
         <div class="org-node">
           <span class="org-label">Bendahara</span>
         </div>
@@ -660,8 +683,7 @@ const gallery = [
   .program-card,
   .journey-step,
   .living-list article,
-  .gallery-item,
-  .motif-card {
+  .gallery-item {
     transition:
       transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
       box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -669,8 +691,7 @@ const gallery = [
   .principle-card:hover,
   .program-card:hover,
   .journey-step:hover,
-  .living-list article:hover,
-  .motif-card:hover {
+  .living-list article:hover {
     transform: translateY(-4px);
     box-shadow: 0 16px 48px -16px rgba(0, 0, 0, 0.3);
   }
@@ -856,8 +877,7 @@ const gallery = [
 
   .principle-card h3,
   .journey-step h3,
-  .program-card h3,
-  .motif-card h3 {
+  .program-card h3 {
     margin-bottom: 0.75rem;
     font-size: clamp(1.25rem, 2vw, 1.7rem);
     font-weight: 500;
@@ -866,8 +886,7 @@ const gallery = [
 
   .principle-card p,
   .journey-step p,
-  .program-card p,
-  .motif-card p {
+  .program-card p {
     color: var(--color-ivory-dim);
     line-height: 1.7;
     font-size: 0.98rem;
@@ -907,8 +926,7 @@ const gallery = [
   }
 
   .guardian-visual img,
-  .gallery-item img,
-  .motif-card img {
+  .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -1088,29 +1106,153 @@ const gallery = [
     align-items: end;
   }
 
-  .motif-grid {
-    display: grid;
-    gap: 1rem;
+  .motif-archive-cta {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
-  .motif-card {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 1rem;
+  .archive-btn {
+    position: relative;
+    display: inline-flex;
     align-items: center;
-    min-height: 140px;
-    padding: 0.75rem;
-    border: 1px solid var(--glass-border);
-    background: var(--glass-bg);
+    justify-content: center;
+    gap: 0.75rem;
+    overflow: hidden;
+    isolation: isolate;
+    padding: 1.4rem 2.8rem;
+    border: none;
+    border-radius: 20px;
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: #2a1d05;
+    cursor: pointer;
+    box-shadow:
+      0 20px 60px -16px rgba(212, 175, 55, 0.5),
+      0 2px 0 0 rgba(255, 255, 255, 0.25) inset;
+    transition: transform 0.5s var(--ease-lux), box-shadow 0.5s var(--ease-lux);
   }
-  [data-theme="light"] .motif-card {
-    background: rgba(42, 39, 34, 0.12);
+  .archive-btn:hover {
+    transform: scale(1.04);
+    box-shadow:
+      0 28px 70px -14px rgba(212, 175, 55, 0.7),
+      0 2px 0 0 rgba(255, 255, 255, 0.3) inset;
   }
+  .archive-btn-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(135deg, #fbe7a2 0%, #f4d878 25%, var(--color-gold) 55%, #c89a3e 100%);
+    border-radius: inherit;
+  }
+  .archive-btn::before {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 50%;
+    border-radius: 20px 20px 100% 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .archive-btn-shine {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.5) 48%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.5) 52%, transparent 70%);
+    transform: translateX(-130%);
+    transition: transform 0.9s var(--ease-lux);
+    border-radius: inherit;
+  }
+  .archive-btn:hover .archive-btn-shine { transform: translateX(130%); }
+  .archive-btn-content {
+    position: relative;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .archive-btn-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    opacity: 0.9;
+  }
+  .archive-btn-label {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .archive-btn-arrow {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    transition: transform 0.5s var(--ease-lux);
+  }
+  .archive-btn:hover .archive-btn-arrow { transform: translateX(6px); }
 
-  .motif-card img {
-    aspect-ratio: 1;
-    min-height: 120px;
+  .archive-modal {
+    width: min(92vw, 540px);
+    margin: auto;
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    padding: clamp(1.5rem, 5vw, 2.2rem);
+    background:
+      radial-gradient(90% 60% at 50% 0%, rgba(212, 175, 55, 0.12), transparent 62%),
+      var(--color-ink-2);
+    color: var(--color-ivory);
+    box-shadow: 0 30px 90px -32px rgba(0, 0, 0, 0.95);
+    text-align: center;
   }
+  [data-theme="light"] .archive-modal {
+    background:
+      radial-gradient(90% 60% at 50% 0%, rgba(200, 150, 14, 0.06), transparent 62%),
+      var(--color-ink-2);
+    box-shadow: 0 20px 60px -24px rgba(0, 0, 0, 0.12);
+  }
+  .archive-modal::backdrop {
+    background: rgba(0, 0, 0, 0.72);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+  .archive-modal[open] {
+    animation: modal-in 0.55s var(--ease-lux);
+  }
+  .archive-modal h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 400;
+    margin: 1rem 0 0.8rem;
+    color: var(--color-ivory);
+  }
+  .archive-modal p {
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+    line-height: 1.7;
+    color: var(--color-ivory-dim);
+    max-width: 40ch;
+    margin: 0 auto 1.5rem;
+  }
+  .archive-modal .modal-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.8rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #f4d878, var(--color-gold) 55%, var(--color-bronze));
+    color: #2a1d05;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: box-shadow 0.4s var(--ease-lux);
+  }
+  .archive-modal .modal-action:hover { box-shadow: 0 10px 30px -8px rgba(212, 175, 55, 0.5); }
 
   .living {
     background:
@@ -1425,29 +1567,32 @@ const gallery = [
     border: 1px solid var(--glass-border);
     background: var(--glass-bg);
     border-radius: 8px;
-    transition: transform 0.4s var(--ease-lux), box-shadow 0.4s var(--ease-lux), border-color 0.4s var(--ease-lux);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .partner-card:hover {
     transform: scale(1.04);
-    border-color: rgba(212, 175, 55, 0.2);
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.25);
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.12);
   }
   [data-theme="light"] .partner-card {
     background: rgba(42, 39, 34, 0.06);
   }
   [data-theme="light"] .partner-card:hover {
-    box-shadow: 0 0 30px rgba(122, 92, 16, 0.06);
-    border-color: rgba(122, 92, 16, 0.2);
+    box-shadow: 0 0 40px rgba(122, 92, 16, 0.08);
+    border-color: rgba(122, 92, 16, 0.25);
   }
   .partner-logo {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    opacity: 1;
-    transition: transform 0.5s var(--ease-lux);
+    opacity: 0.85;
+    filter: grayscale(0.3) brightness(0.9);
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .partner-card:hover .partner-logo {
     transform: scale(1.12);
+    opacity: 1;
+    filter: grayscale(0) brightness(1.1);
   }
 
   @media (max-width: 800px) {
@@ -1512,6 +1657,22 @@ const gallery = [
     color: var(--color-ivory);
     white-space: nowrap;
   }
+  .org-director {
+    padding: 0.6rem 1.6rem;
+    border-color: rgba(212, 175, 55, 0.2);
+    font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+    font-weight: 500;
+    color: var(--color-ivory);
+    letter-spacing: 0.04em;
+  }
+  .org-advisor {
+    padding: 0.6rem 1.6rem;
+    border-color: rgba(212, 175, 55, 0.15);
+    font-size: clamp(0.8rem, 1.1vw, 0.9rem);
+    font-style: italic;
+    color: var(--color-ivory-dim);
+    letter-spacing: 0.06em;
+  }
   .org-root {
     padding: 0.8rem 2rem;
     border-color: rgba(212, 175, 55, 0.3);
@@ -1528,6 +1689,12 @@ const gallery = [
     width: 1px;
     height: 24px;
     background: linear-gradient(to bottom, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.1));
+  }
+  .org-line-h {
+    width: clamp(1.5rem, 4vw, 3rem);
+    height: 1px;
+    align-self: center;
+    background: linear-gradient(to right, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.1));
   }
   .org-row {
     display: flex;
@@ -1593,7 +1760,7 @@ const gallery = [
       flex-direction: column;
       align-items: center;
     }
-    .org-spacer { display: none; }
+    .org-line-h { display: none; }
   }
   @keyframes goldShimmer {
     0% { background-position: 0% 0%; }
@@ -1967,15 +2134,6 @@ const gallery = [
       aspect-ratio: 4 / 5;
     }
 
-    .motif-card {
-      grid-template-columns: 1fr;
-    }
-
-    .motif-card img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-    }
-
     .living-list article {
       grid-template-columns: 1fr;
       gap: 0.2rem;
@@ -2076,6 +2234,22 @@ const gallery = [
 
   modal?.addEventListener("click", (event) => {
     if (event.target === modal) modal.close();
+  });
+
+  const archiveModal = document.getElementById("archive-modal") as HTMLDialogElement | null;
+  const archiveBtn = document.getElementById("archive-btn") as HTMLButtonElement | null;
+  const archiveClosers = document.querySelectorAll<HTMLElement>("[data-archive-close]");
+
+  archiveBtn?.addEventListener("click", () => {
+    if (archiveModal?.showModal) archiveModal.showModal();
+  });
+
+  archiveClosers.forEach((button) => {
+    button.addEventListener("click", () => archiveModal?.close());
+  });
+
+  archiveModal?.addEventListener("click", (event) => {
+    if (event.target === archiveModal) archiveModal.close();
   });
 
   const form = document.getElementById("collab-form") as HTMLFormElement | null;

@@ -9,6 +9,10 @@ import Hero from "../components/Hero.astro";
 
 <Layout>
   <Navbar />
+  <button class="soundtrack-btn" id="soundtrack-btn" aria-label="Putar soundtrack" type="button">
+    <svg class="snd-icon snd-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    <svg class="snd-icon snd-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+  </button>
   <ThemeToggle />
   <main class="content">
     <Hero />
@@ -16,6 +20,78 @@ import Hero from "../components/Hero.astro";
     <Continuation />
   </main>
 </Layout>
+
+<style>
+  .soundtrack-btn {
+    position: fixed;
+    bottom: calc(1.5rem + 52px);
+    right: 1.5rem;
+    z-index: 200;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    color: var(--color-ivory);
+    cursor: pointer;
+    transition: transform 0.4s var(--ease-lux), background 0.4s, border-color 0.4s, color 0.4s;
+    box-shadow: 0 8px 28px -12px rgba(0,0,0,0.6);
+  }
+  .soundtrack-btn:hover { transform: scale(1.1); }
+  .snd-icon {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .snd-pause { opacity: 0; transform: scale(0.5); }
+  .soundtrack-btn.is-playing .snd-play { opacity: 0; transform: scale(0.5); }
+  .soundtrack-btn.is-playing .snd-pause { opacity: 1; transform: none; }
+  @media (max-width: 768px) {
+    .soundtrack-btn {
+      bottom: calc(1rem + 48px);
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<script>
+  const audio = document.getElementById("soundtrack") as HTMLAudioElement;
+  const sndBtn = document.getElementById("soundtrack-btn") as HTMLButtonElement;
+
+  if (audio && sndBtn) {
+    let started = false;
+
+    const play = () => {
+      audio.play().catch(() => {});
+      sndBtn.classList.add("is-playing");
+      sndBtn.setAttribute("aria-label", "Jeda soundtrack");
+    };
+    const pause = () => {
+      audio.pause();
+      sndBtn.classList.remove("is-playing");
+      sndBtn.setAttribute("aria-label", "Putar soundtrack");
+    };
+
+    sndBtn.addEventListener("click", () => {
+      if (audio.paused) play();
+      else pause();
+    });
+
+    document.addEventListener("click", () => {
+      if (!started) {
+        started = true;
+        play();
+      }
+    }, { once: true });
+  }
+</script>
 
 <script>
   const par = document.querySelectorAll<HTMLElement>("[data-parallax]");
