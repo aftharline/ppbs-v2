@@ -1691,16 +1691,26 @@ const gallery = [
     background: linear-gradient(to bottom, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.1));
   }
   .org-line-h {
-    width: clamp(1.5rem, 4vw, 3rem);
-    height: 1px;
+    flex: 1;
+    height: 2px;
     align-self: center;
-    background: linear-gradient(to right, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.1));
+    border-radius: 2px;
+    background: linear-gradient(to right, rgba(212, 175, 55, 0.5), rgba(212, 175, 55, 0.15));
+    min-width: clamp(0.75rem, 2vw, 1.5rem);
   }
   .org-row {
     display: flex;
     justify-content: center;
     gap: clamp(1.5rem, 4vw, 3rem);
     flex-wrap: wrap;
+  }
+  .org-row-2 {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+  .org-row-2 .org-node {
+    flex-shrink: 0;
   }
   .org-spacer {
     width: clamp(1.5rem, 4vw, 3rem);
@@ -1760,7 +1770,18 @@ const gallery = [
       flex-direction: column;
       align-items: center;
     }
-    .org-line-h { display: none; }
+    .org-row-2 {
+      flex-direction: column;
+      align-items: center;
+    }
+    .org-line-h {
+      flex: none;
+      width: 2px;
+      height: clamp(0.5rem, 2vw, 1rem);
+      align-self: auto;
+      border-radius: 2px;
+      background: linear-gradient(to bottom, rgba(212, 175, 55, 0.5), rgba(212, 175, 55, 0.2));
+    }
   }
   @keyframes goldShimmer {
     0% { background-position: 0% 0%; }
