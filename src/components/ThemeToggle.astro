@@ -1,0 +1,74 @@
+---
+---
+
+<button class="theme-toggle" id="theme-toggle" aria-label="Ganti tema" type="button">
+  <svg class="theme-icon theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+  </svg>
+  <svg class="theme-icon theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+  </svg>
+</button>
+
+<style>
+  .theme-toggle {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 200;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    color: var(--color-ivory);
+    cursor: pointer;
+    transition: transform 0.4s var(--ease-lux), background 0.4s, border-color 0.4s, color 0.4s;
+    box-shadow: 0 8px 28px -12px rgba(0,0,0,0.6);
+  }
+
+  .theme-toggle:hover {
+    transform: scale(1.1);
+  }
+
+  .theme-icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .theme-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+  .theme-moon { opacity: 1; transform: none; }
+
+  [data-theme="light"] .theme-sun { opacity: 1; transform: none; }
+  [data-theme="light"] .theme-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+
+  @media (max-width: 768px) {
+    .theme-toggle {
+      bottom: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById("theme-toggle");
+  const html = document.documentElement;
+
+  const stored = localStorage.getItem("ppbs-theme");
+  if (stored === "light") html.setAttribute("data-theme", "light");
+
+  toggle?.addEventListener("click", () => {
+    const current = html.getAttribute("data-theme");
+    const next = current === "light" ? "" : "light";
+    html.setAttribute("data-theme", next);
+    localStorage.setItem("ppbs-theme", next || "dark");
+  });
+</script>

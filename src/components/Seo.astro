@@ -1,0 +1,58 @@
+---
+/**
+ * Seo.astro — meta, Open Graph, Twitter card, JSON-LD.
+ * Props with sensible defaults for Putera Puteri Batik Surabaya.
+ */
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  url?: string;
+}
+const {
+  title = "Putera Puteri Batik Surabaya — Menjaga Warisan, Menginspirasi Generasi",
+  description = "Pengalaman digital sinematik yang merayakan batik Surabaya: tempat motif, makna, dan jati diri berabad-abad menjadi warisan.",
+  image = "/logo.png",
+  url = Astro.url.href,
+} = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Putera Puteri Batik Surabaya",
+  description,
+  url,
+  slogan: "Menjaga Warisan. Menginspirasi Generasi.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Surabaya",
+    addressCountry: "ID",
+  },
+};
+---
+
+<!-- Primary -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="lang" content="id" />
+<link rel="canonical" href={url} />
+<meta name="theme-color" content="#090909" />
+<meta name="color-scheme" content="dark" />
+<meta property="og:locale" content="id_ID" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Putera Puteri Batik Surabaya" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={url} />
+<meta property="og:image" content={new URL(image, Astro.site ?? Astro.url).toString()} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(image, Astro.site ?? Astro.url).toString()} />
+
+<!-- Structured data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

@@ -1,0 +1,145 @@
+---
+/**
+ * GlassButton.astro — tombol kaca premium dengan kedalaman.
+ * Variant "solid": gradien emas kontras tinggi + glow + inner highlight + sweep.
+ * Variant "ghost": kaca tebal dengan border emas tipis + sweep emas.
+ * Mikro-interaksi magnetik (desktop) + light sweep.
+ */
+interface Props {
+  variant?: "solid" | "ghost";
+  href?: string;
+  type?: "button" | "submit";
+  class?: string;
+  /** used as boolean-ish marker in many places */
+  ["data-cursor"]?: any;
+}
+
+const {
+  variant = "ghost",
+  href,
+  type = "button",
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+const cls = `btn btn-${variant} ${className}`;
+---
+
+{
+  href ? (
+    <a href={href} class={cls} data-magnetic {...rest}>
+      <span class="btn-bg" aria-hidden="true" />
+      <span class="btn-shine" aria-hidden="true" />
+      <span class="btn-label">
+        <slot />
+      </span>
+    </a>
+  ) : (
+    <button type={type} class={cls} data-magnetic {...rest}>
+      <span class="btn-bg" aria-hidden="true" />
+      <span class="btn-shine" aria-hidden="true" />
+      <span class="btn-label">
+        <slot />
+      </span>
+    </button>
+  )
+}
+
+<style>
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    overflow: hidden;
+    isolation: isolate;
+    padding: 1rem 1.7rem;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;
+    will-change: transform;
+    transition: transform 0.5s var(--ease-lux);
+  }
+  .btn-label { position: relative; z-index: 3; display: inline-flex; align-items: center; gap: 0.55rem; }
+  .btn-bg, .btn-shine { position: absolute; inset: 0; z-index: 1; }
+
+  /* ===== SOLID (emas) ===== */
+  .btn-solid {
+    color: #2a1d05;
+    box-shadow:
+      0 14px 40px -12px rgba(212, 175, 55, 0.6),
+      0 2px 0 0 rgba(255, 255, 255, 0.25) inset;
+  }
+  .btn-solid .btn-bg {
+    background: linear-gradient(135deg, #fbe7a2 0%, #f4d878 30%, var(--color-gold) 60%, #c89a3e 100%);
+  }
+  /* Garis highlight dalam di tepi atas */
+  .btn-solid::before {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 50%;
+    border-radius: 999px 999px 100% 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .btn-solid .btn-shine {
+    background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.6) 50%, transparent 65%);
+    transform: translateX(-130%);
+    transition: transform 0.9s var(--ease-lux);
+  }
+  .btn-solid:hover { box-shadow: 0 20px 55px -10px rgba(212, 175, 55, 0.8), 0 2px 0 0 rgba(255,255,255,0.3) inset; }
+
+  /* ===== GHOST (kaca) ===== */
+  .btn-ghost {
+    color: var(--color-ivory);
+    background: var(--glass-bg);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+      0 10px 30px -16px rgba(0, 0, 0, 0.7);
+  }
+  .btn-ghost .btn-bg {
+    background: radial-gradient(120% 100% at 50% 120%, rgba(212, 175, 55, 0.18), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-lux);
+  }
+  .btn-ghost .btn-shine {
+    background: linear-gradient(115deg, transparent 38%, rgba(212, 175, 55, 0.35) 50%, transparent 62%);
+    transform: translateX(-130%);
+    transition: transform 0.9s var(--ease-lux);
+  }
+  .btn-ghost:hover {
+    border-color: rgba(212, 175, 55, 0.7);
+  }
+  .btn-ghost:hover .btn-bg { opacity: 1; }
+
+  /* Sweep on hover (both) */
+:global([data-magnetic]:hover) .btn-shine { transform: translateX(130%) !important; }
+
+  /* Magnet disabled: keep only visual shine for performance */
+:global([data-magnetic]) { transform: none !important; }
+
+  /* Avoid CLS: reserve layout size even while hover/shine animates */
+  .btn { transform: translateZ(0); }
+
+
+  @media (max-width: 540px) {
+    .btn { padding: 0.85rem 1.3rem; font-size: 0.72rem; letter-spacing: 0.12em; }
+  }
+</style>
+
+<script>
+  // Magnet disabled for Lighthouse performance stability.
+  // Hover shine remains via CSS (:global([data-magnetic]:hover) ...).
+</script>
+

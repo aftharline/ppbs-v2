@@ -1,0 +1,54 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import About from "../components/sections/About.astro";
+import Continuation from "../components/sections/Continuation.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import Hero from "../components/Hero.astro";
+---
+
+<Layout>
+  <Navbar />
+  <ThemeToggle />
+  <main class="content">
+    <Hero />
+    <About />
+    <Continuation />
+  </main>
+</Layout>
+
+<script>
+  const par = document.querySelectorAll<HTMLElement>("[data-parallax]");
+  if (par.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          par.forEach((el) => {
+            const rect = el.getBoundingClientRect();
+            const spd = parseFloat(el.dataset.parallax || "0.15");
+            const y = rect.top * spd;
+            el.style.transform = `translateY(${y}px)`;
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  const revealEls = document.querySelectorAll<HTMLElement>("#about [data-reveal]");
+  if ("IntersectionObserver" in window && revealEls.length) {
+    const ro = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("is-in");
+          ro.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    revealEls.forEach((el) => ro.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add("is-in"));
+  }
+</script>

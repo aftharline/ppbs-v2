@@ -1,0 +1,106 @@
+---
+/**
+ * Ornament.astro — segel/motif dekoratif batik khas (reusable).
+ * Bintang berujung delapan (motif kosmik batik pesisir) dengan
+ * kelopak emas, diputar perlahan. Variants: "seal" (lengkap) atau
+ * "rule" (pemisah horizontal dengan ornamen di tengah).
+ */
+interface Props {
+  variant?: "seal" | "rule";
+  class?: string;
+}
+const { variant = "seal", class: className = "" } = Astro.props;
+---
+
+{
+  variant === "seal" ? (
+    <div class:list={["ornament-seal", className]} aria-hidden="true">
+      <svg viewBox="0 0 120 120" class="seal-svg">
+        <g class="seal-spin">
+          {/* outer ring */}
+          <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5" />
+          <circle cx="60" cy="60" r="50" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.3" />
+          {/* 8-point star — motif kosmik */}
+          <g class="star">
+            <path
+              d="M60 12 L66 50 L104 44 L72 60 L104 76 L66 70 L60 108 L54 70 L16 76 L48 60 L16 44 L54 50 Z"
+              fill="currentColor"
+              opacity="0.85"
+            />
+          </g>
+          {/* inner 8 dots */}
+          {Array.from({ length: 8 }).map((_, i) => {
+            const a = (i / 8) * Math.PI * 2;
+            const x = 60 + Math.cos(a) * 32;
+            const y = 60 + Math.sin(a) * 32;
+            return <circle cx={x} cy={y} r="1.6" fill="currentColor" opacity="0.7" />;
+          })}
+          <circle cx="60" cy="60" r="6" fill="none" stroke="currentColor" stroke-width="0.8" />
+        </g>
+      </svg>
+    </div>
+  ) : (
+    <div class:list={["ornament-rule", className]} aria-hidden="true">
+      <span class="rule-line" />
+      <svg viewBox="0 0 40 40" class="rule-icon">
+        <path
+          d="M20 4 L23 17 L36 20 L23 23 L20 36 L17 23 L4 20 L17 17 Z"
+          fill="currentColor"
+        />
+      </svg>
+      <span class="rule-line" />
+    </div>
+  )
+}
+
+<style>
+  .ornament-seal {
+    color: var(--color-gold);
+    display: inline-grid;
+    place-items: center;
+  }
+  .seal-svg {
+    width: clamp(80px, 14vw, 140px);
+    height: auto;
+    overflow: visible;
+  }
+  .seal-spin {
+    transform-origin: 60px 60px;
+    animation: seal-rotate 40s linear infinite;
+  }
+  @keyframes seal-rotate {
+    to { transform: rotate(360deg); }
+  }
+
+  .ornament-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--color-gold);
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+  .rule-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+  }
+  .rule-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    opacity: 0.85;
+    animation: rule-twinkle 6s ease-in-out infinite;
+  }
+  @keyframes rule-twinkle {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.85; }
+    50% { transform: scale(1.2) rotate(45deg); opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seal-spin { animation: none; }
+    .rule-icon { animation: none; }
+  }
+</style>

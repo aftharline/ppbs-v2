@@ -1,0 +1,2097 @@
+---
+/**
+ * Continuation.astro - landing page lanjutan PPBS.
+ * Mengisi anchor navbar, memperpanjang alur scroll, dan menjaga semua
+ * interaksi tetap statis-ringan untuk performa Lighthouse.
+ */
+import GlassButton from "../ui/GlassButton.astro";
+import Ornament from "../ui/Ornament.astro";
+
+const principles = [
+  {
+    num: "01",
+    title: "Merawat akar",
+    text: "Cerita, teknik, dan simbol batik Surabaya dijaga sebagai bahasa budaya yang bisa dipahami lintas generasi.",
+  },
+  {
+    num: "02",
+    title: "Menghidupkan kota",
+    text: "Batik dibawa ke ruang publik melalui edukasi, perjumpaan kreatif, dan pengalaman budaya yang dekat dengan warga.",
+  },
+  {
+    num: "03",
+    title: "Menjadi teladan",
+    text: "Putera-puteri dibentuk agar anggun dalam sikap, tajam dalam wawasan, dan siap menjadi wajah warisan Surabaya.",
+  },
+];
+
+const traits = [
+  "Berpengetahuan budaya",
+  "Berani tampil dengan tutur halus",
+  "Peka terhadap detail motif",
+  "Mampu menghubungkan tradisi dan masa kini",
+];
+
+const journey = [
+  {
+    phase: "Temu",
+    title: "Mengenal warisan",
+    text: "Peserta memasuki cerita batik Surabaya melalui motif, tokoh, tempat, dan nilai yang membentuknya.",
+  },
+  {
+    phase: "Latih",
+    title: "Menajamkan diri",
+    text: "Rangkaian kelas membentuk pembawaan, komunikasi, riset budaya, dan kepekaan visual.",
+  },
+  {
+    phase: "Tampil",
+    title: "Mewakili kota",
+    text: "Finalis membawa narasi batik ke panggung, komunitas, dan agenda budaya Surabaya.",
+  },
+  {
+    phase: "Terus",
+    title: "Menjadi penjaga",
+    text: "Para alumni bergerak sebagai jejaring muda yang merawat batik lewat karya dan pelayanan publik.",
+  },
+];
+
+const programs = [
+  {
+    title: "Kelas Motif",
+    text: "Sesi pembacaan motif khas Surabaya, dari simbol pesisir hingga karakter kota yang teguh.",
+  },
+  {
+    title: "Ruang Tutur",
+    text: "Pelatihan public speaking, story framing, dan cara menyampaikan warisan tanpa kehilangan jiwa.",
+  },
+  {
+    title: "Jejak Kota",
+    text: "Kunjungan budaya dan pemetaan titik batik untuk memahami Surabaya sebagai ruang hidup tradisi.",
+  },
+  {
+    title: "Kolaborasi Kriya",
+    text: "Pertemuan dengan perajin, kreator, dan komunitas untuk membuka peluang karya lintas generasi.",
+  },
+];
+
+const logos = Array.from({ length: 36 }, (_, i) => ({
+  src: `/partnership/${i + 2}.webp`,
+  alt: `Mitra ${i + 2}`,
+  width: 1000,
+  height: 1000,
+}));
+
+const motifs = [
+  { name: "Semanggi", note: "Ketahanan dan rasa guyub warga kota.", src: "/motif/semanggi.webp", width: 778, height: 469 },
+  { name: "Sawunggaling", note: "Keberanian, daya juang, dan martabat.", src: "/motif/sawunggaling.jpg", width: 300, height: 300 },
+  { name: "Pesisir", note: "Pertemuan warna, pelabuhan, dan cerita dagang.", src: "/motif/pesisir.jpeg", width: 1200, height: 900 },
+];
+
+const experiences = [
+  "Workshop batik dan literasi motif untuk komunitas muda.",
+  "Kurasi visual untuk kampanye budaya dan acara kota.",
+  "Kolaborasi konten dengan perajin, sekolah, dan ruang kreatif.",
+  "Panggung apresiasi untuk finalis dan alumni PPBS.",
+];
+
+const gallery = [
+  { src: "/figure.webp", alt: "Visual batik bernuansa pembuka", label: "Motif", width: 1385, height: 924 },
+  { src: "/figure.webp", alt: "Visual rangkaian batik Surabaya", label: "Ragam", width: 1385, height: 924 },
+  { src: "/figure.webp", alt: "Visual detail sekuens batik", label: "Detail", width: 1385, height: 924 },
+  { src: "/figure.webp", alt: "Visual klimaks narasi batik", label: "Panggung", width: 1385, height: 924 },
+];
+---
+
+<section class="marquee-band" aria-label="Semboyan">
+  <div class="marquee-track">
+    {Array.from({ length: 3 }).map(() => (
+      <div class="marquee-set" aria-hidden="true">
+        <span>WUJUD TRESNA BUDHAYA AREK SURABAYA</span>
+        <i></i>
+        <span>SURABAYA JUARA</span>
+        <i></i>
+      </div>
+    ))}
+  </div>
+</section>
+
+<section class="vision section-shell" id="vision">
+  <div class="section-inner vision-inner">
+    <div class="section-kicker">
+      <span class="t-eyebrow">Visi</span>
+      <span class="section-num">02</span>
+    </div>
+
+    <div class="vision-copy">
+      <h2 class="section-title">
+        Warisan yang <span>berjalan</span>, bukan hanya dikenang.
+      </h2>
+      <p class="t-lead">
+        PPBS hadir sebagai ruang pembentukan duta budaya muda yang mengerti
+        akar batik Surabaya, berani membawanya ke hari ini, dan cukup peka
+        untuk menjaga maknanya tetap utuh.
+      </p>
+    </div>
+
+    <div class="principle-grid" data-reveal-group>
+      {principles.map((item) => (
+        <article class="principle-card">
+          <span class="principle-num">{item.num}</span>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="guardians section-shell" id="guardians">
+  <div class="section-inner guardian-grid">
+    <div class="guardian-visual" data-reveal>
+      <img src="/figure.webp" alt="Sang Penjaga Batik Surabaya" loading="lazy" width="1385" height="924" />
+      <span class="visual-badge">Sang Penjaga</span>
+    </div>
+
+    <div class="guardian-copy">
+      <div class="section-kicker">
+        <span class="t-eyebrow">Sang Penjaga</span>
+        <span class="section-num">03</span>
+      </div>
+      <h2 class="section-title">
+        Hadir dengan <span>wibawa</span>, bergerak dengan makna.
+      </h2>
+      <p class="t-body">
+        Figur Sang Penjaga menjadi citra utama PPBS: sosok muda yang tidak
+        sekadar mengenakan batik, tetapi mampu membaca, menjelaskan, dan
+        menghidupkan nilai di baliknya.
+      </p>
+
+      <ul class="trait-list" data-reveal-group>
+        {traits.map((trait) => (
+          <li>
+            <span aria-hidden="true"></span>
+            {trait}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="journey section-shell" id="journey">
+  <div class="section-inner">
+    <div class="section-kicker">
+      <span class="t-eyebrow">Perjalanan</span>
+      <span class="section-num">04</span>
+    </div>
+    <div class="journey-head">
+      <h2 class="section-title">Dari rasa ingin tahu menuju panggung budaya.</h2>
+      <p class="t-body">
+        Setiap tahap dirancang sebagai proses bertumbuh: peserta belajar,
+        berlatih, hadir, lalu kembali memberi dampak.
+      </p>
+    </div>
+
+    <div class="journey-line" data-reveal-group>
+      {journey.map((item) => (
+        <article class="journey-step">
+          <span class="step-phase">{item.phase}</span>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="programs section-shell" id="programs">
+  <div class="section-inner programs-inner">
+    <div class="programs-title">
+      <div class="section-kicker">
+        <span class="t-eyebrow">Program</span>
+        <span class="section-num">05</span>
+      </div>
+      <h2 class="section-title">
+        Ruang belajar yang <span>membentuk</span> rasa, suara, dan sikap.
+      </h2>
+    </div>
+
+    <div class="program-grid" data-reveal-group>
+      {programs.map((program, i) => (
+        <article class="program-card">
+          <span>{String(i + 1).padStart(2, "0")}</span>
+          <h3>{program.title}</h3>
+          <p>{program.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="motif-lab section-shell">
+  <div class="section-inner motif-inner">
+    <div>
+      <span class="t-eyebrow">Arsip Motif</span>
+      <h2 class="section-title">Setiap garis menyimpan <span>alamat pulang</span>.</h2>
+    </div>
+    <div class="motif-grid" data-reveal-group>
+      {motifs.map((motif) => (
+        <article class="motif-card">
+          <img src={motif.src} alt={`Motif ${motif.name}`} loading="lazy" width={motif.width} height={motif.height} />
+          <div>
+            <h3>{motif.name}</h3>
+            <p>{motif.note}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="living section-shell">
+  <div class="section-inner living-inner">
+    <div class="living-copy">
+      <span class="t-eyebrow">Pengalaman</span>
+      <h2 class="section-title">Batik terasa hidup saat disentuh banyak tangan.</h2>
+    </div>
+    <div class="living-list" data-reveal-group>
+      {experiences.map((item, i) => (
+        <article>
+          <span>{String(i + 1).padStart(2, "0")}</span>
+          <p>{item}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Filosofi Logo -->
+<section class="logo-philosophy section-shell" id="logo-philosophy">
+  <div class="section-inner logo-philosophy-inner">
+    <div class="section-kicker">
+      <span class="t-eyebrow">Filosofi Logo</span>
+      <span class="section-num">06</span>
+    </div>
+
+    <div class="logo-philosophy-grid" data-reveal-group>
+      <div class="logo-philosophy-copy">
+        <h2 class="section-title">
+          Logo yang <span>berbicara</span> lewat bentuk dan rasa.
+        </h2>
+        <p class="t-lead">
+          Logo PPBS adalah ringkasan nilai: keteguhan, kehangatan, dan
+          disiplin dalam merawat tradisi. Garis dan komposisinya dibuat
+          agar mudah dibaca, namun tetap menyimpan jejak makna batik
+          Surabaya.
+        </p>
+        <p class="t-body">
+          Filosofi ini hadir bukan sebagai hiasan, melainkan pegangan
+          perjalanan para Putera Puteri untuk menjadi wajah warisan kota yang
+          relevan di masa kini.
+        </p>
+      </div>
+
+      <div class="logo-philosophy-display" data-reveal>
+        <div class="logo-display-frame" aria-hidden="true" style="border-radius: 0;"></div>
+        <img
+          src="/logo.svg"
+          alt="Logo Putera Puteri Batik Surabaya"
+          loading="lazy"
+          decoding="async"
+          width="286"
+          height="286"
+        />
+        <span class="logo-display-caption">Logo Paguyuban Putera Puteri Batik Surabaya</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery section-shell" id="gallery">
+  <div class="section-inner">
+    <div class="gallery-head">
+      <div>
+        <span class="t-eyebrow">Galeri</span>
+        <h2 class="section-title">Fragmen visual dari napas batik Surabaya.</h2>
+      </div>
+      <p class="t-body">
+        Potongan gambar dari narasi pembuka menjadi jendela untuk rasa, warna,
+        dan ritme yang membentuk pengalaman PPBS.
+      </p>
+    </div>
+
+    <div class="gallery-grid" data-reveal-group>
+      {gallery.map((item) => (
+        <figure class="gallery-item">
+          <img src={item.src} alt={item.alt} loading="lazy" width={item.width} height={item.height} />
+          <figcaption>{item.label}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="collaboration section-shell" id="collaboration">
+  <div class="section-inner collab-inner">
+    <div class="collab-copy">
+      <span class="t-eyebrow">Kolaborasi</span>
+      <h2 class="section-title">Punya ruang, acara, atau gagasan budaya?</h2>
+      <p class="t-body">
+        Ceritakan kebutuhanmu. Form ini akan membuka WhatsApp dengan pesan
+        yang sudah tersusun rapi sesuai data yang diisi.
+      </p>
+    </div>
+
+    <form class="collab-form" id="collab-form">
+      <label>
+        <span>Nama</span>
+        <input name="nama" autocomplete="name" required />
+      </label>
+      <label>
+        <span>Instansi / Komunitas</span>
+        <input name="instansi" autocomplete="organization" required />
+      </label>
+      <label>
+        <span>Kontak WhatsApp</span>
+        <input name="kontak" inputmode="tel" autocomplete="tel" required />
+      </label>
+      <label>
+        <span>Jenis Kolaborasi</span>
+        <select name="jenis" required>
+          <option value="">Pilih salah satu</option>
+          <option>Workshop batik</option>
+          <option>Acara budaya</option>
+          <option>Konten kreatif</option>
+          <option>Kolaborasi brand</option>
+          <option>Lainnya</option>
+        </select>
+      </label>
+      <label class="field-wide">
+        <span>Pesan</span>
+        <textarea name="pesan" rows="4" required></textarea>
+      </label>
+      <button class="collab-submit" type="submit" data-cursor data-magnetic>
+        Kirim ke WhatsApp
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </form>
+  </div>
+</section>
+
+<section class="structure section-shell" id="structure">
+  <div class="section-inner structure-inner">
+    <div class="section-kicker">
+      <span class="t-eyebrow">Struktur</span>
+      <span class="section-num">07</span>
+    </div>
+    <h2 class="section-title structure-title">
+      Struktur <span>Kepengurusan</span>
+    </h2>
+    <p class="t-body structure-desc">
+      Susunan organisasi Putera Puteri Batik Surabaya yang menjadi tulang punggung gerakan budaya.
+    </p>
+    <div class="org-chart">
+      <div class="org-node org-root">
+        <span class="org-label">Ketua Umum</span>
+      </div>
+      <div class="org-line-v"></div>
+
+      <div class="org-row org-row-1">
+        <div class="org-node">
+          <span class="org-label">Wakil Ketua Umum</span>
+        </div>
+      </div>
+      <div class="org-line-v"></div>
+
+      <div class="org-row org-row-2">
+        <div class="org-node">
+          <span class="org-label">Sekretaris</span>
+        </div>
+        <div class="org-spacer"></div>
+        <div class="org-node">
+          <span class="org-label">Bendahara</span>
+        </div>
+      </div>
+      <div class="org-line-v"></div>
+
+      <div class="org-node org-division-head">
+        <span class="org-label">Kepala Divisi</span>
+      </div>
+      <div class="org-line-v"></div>
+
+      <div class="org-row org-row-grid">
+        <div class="org-division">
+          <div class="org-division-name">Divisi Organisasi &amp; Keanggotaan</div>
+          <div class="org-sub">Koordinator</div>
+          <div class="org-sub-sub">Anggota</div>
+        </div>
+        <div class="org-division">
+          <div class="org-division-name">Divisi Humas &amp; Kemitraan</div>
+          <div class="org-sub">Koordinator</div>
+          <div class="org-sub-sub">Anggota</div>
+        </div>
+        <div class="org-division">
+          <div class="org-division-name">Divisi Pelestarian &amp; Pengembangan Batik</div>
+          <div class="org-sub">Koordinator</div>
+          <div class="org-sub-sub">Anggota</div>
+        </div>
+        <div class="org-division">
+          <div class="org-division-name">Divisi Pendidikan &amp; Pelatihan</div>
+          <div class="org-sub">Koordinator</div>
+          <div class="org-sub-sub">Anggota</div>
+        </div>
+        <div class="org-division">
+          <div class="org-division-name">Divisi Sosial &amp; Pengabdian Masyarakat</div>
+          <div class="org-sub">Koordinator</div>
+          <div class="org-sub-sub">Anggota</div>
+        </div>
+        <div class="org-division">
+          <div class="org-division-name">Divisi Dana &amp; Usaha</div>
+          <div class="org-sub">Koordinator</div>
+          <div class="org-sub-sub">Anggota</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="partnership section-shell" id="partnership">
+  <div class="section-inner partnership-inner">
+    <div class="section-kicker">
+      <span class="t-eyebrow">Mitra Kami</span>
+      <span class="section-num">08</span>
+    </div>
+    <h2 class="section-title partnership-title">
+      Berkolaborasi dengan <span>puluhan</span> mitra dari berbagai sektor.
+    </h2>
+    <p class="t-body partnership-desc">
+      Kami bangga bekerja sama dengan institusi pendidikan, pemerintah, komunitas budaya,
+      dan merek lokal yang turut merawat batik Surabaya.
+    </p>
+  </div>
+  <div class="partnership-grid" aria-label="Logo mitra">
+    {logos.map((logo) => (
+      <div class="partner-card">
+        <img
+          src={logo.src}
+          alt={logo.alt}
+          loading="lazy"
+          decoding="async"
+          width={logo.width}
+          height={logo.height}
+          class="partner-logo"
+        />
+      </div>
+    ))}
+  </div>
+</section>
+
+<section class="register section-shell" id="register">
+  <div class="section-inner register-inner" data-reveal>
+    <Ornament variant="rule" />
+    <span class="t-eyebrow">Pendaftaran</span>
+    <h2 class="register-title">
+      Saatnya membawa batik Surabaya dengan suara generasimu.
+    </h2>
+    <p class="t-lead">
+      Jadilah bagian dari Putera Puteri Batik Surabaya dan ambil peran dalam
+      menjaga warisan kota dengan cara yang hidup, hangat, dan relevan.
+    </p>
+    <div class="register-actions">
+      <GlassButton variant="solid" class="register-open" type="button" data-register-open>
+        Daftar Sekarang
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </GlassButton>
+      <GlassButton variant="ghost" href="#about" data-cursor>
+        Kembali ke Awal
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      </GlassButton>
+    </div>
+  </div>
+</section>
+
+<dialog class="register-modal" id="register-modal" aria-labelledby="register-modal-title">
+  <div class="modal-sigil" aria-hidden="true"></div>
+  <button class="modal-close" type="button" data-register-close aria-label="Tutup">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <span class="t-eyebrow">Informasi</span>
+  <h2 id="register-modal-title">Pemilihan berikutnya dibuka tahun depan.</h2>
+  <p>
+    Terima kasih sudah siap menjadi bagian dari Putera Puteri Batik Surabaya.
+    Untuk saat ini, pendaftaran belum dibuka. Nantikan pemilihan PPBS
+    selanjutnya di tahun depan.
+  </p>
+  <button class="modal-action" type="button" data-register-close>Siap, saya tunggu</button>
+</dialog>
+
+<footer class="site-footer">
+  <div class="footer-marquee" aria-hidden="true">
+    <span>SURABAYA JUARA</span>
+    <span>MENJAGA WARISAN</span>
+    <span>MENGINSPIRASI GENERASI</span>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-brand-text">
+        <span>Putera Puteri</span>
+        <strong>Batik Surabaya</strong>
+      </div>
+      <div class="footer-brand-logo" aria-hidden="true">
+        <img src="/logo.png" alt="" loading="lazy" decoding="async" width="64" height="64" />
+      </div>
+    </div>
+
+    <div class="footer-grid">
+      <div>
+        <h3>Ruang Budaya</h3>
+        <p>Surabaya, Indonesia</p>
+        <p>Wujud tresna budaya arek Surabaya.</p>
+      </div>
+      <div>
+        <h3>Jelajah</h3>
+        <a href="#vision">Visi</a>
+        <a href="#programs">Program</a>
+        <a href="#collaboration">Kolaborasi</a>
+      </div>
+      <div>
+        <h3>Semboyan</h3>
+        <p>Menjaga Warisan.</p>
+        <p>Menginspirasi Generasi.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-credit">
+    <span>Kontak Developer:</span>
+    <a
+      href="https://landingpage-porto-fatih.vercel.app"
+      target="_blank"
+      rel="noreferrer"
+    >
+      Muhammad Fatih
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M10 14L21 3"/><path d="M21 14v7H3V3h7"/></svg>
+    </a>
+  </div>
+</footer>
+
+
+<style>
+.marquee-band {
+    overflow: hidden;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(212, 175, 55, 0.18);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+    background: linear-gradient(180deg, rgba(12,12,10,1), rgba(10,10,9,1));
+    position: relative;
+  }
+  [data-theme="light"] .marquee-band {
+    background: #ede6dc;
+    border-color: rgba(200, 150, 14, 0.2);
+  }
+
+  .marquee-band::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    background:
+      radial-gradient(1200px 120px at 50% 50%, rgba(212,175,55,0.10), transparent 60%),
+      linear-gradient(90deg, transparent, rgba(246,241,233,0.05), transparent);
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-flow 22s linear infinite;
+    position: relative;
+    z-index: 1;
+  }
+
+  .marquee-track:nth-child(even) {
+    animation-duration: 26s;
+  }
+
+  .marquee-set {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 2.2rem);
+    padding-right: clamp(1rem, 2.5vw, 2.2rem);
+    color: rgba(212, 175, 55, 0.95);
+    font-family: var(--font-serif);
+  }
+    font-size: clamp(0.88rem, 1.7vw, 1.25rem);
+    font-weight: 850;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-shadow: 0 0 28px rgba(212,175,55,0.18);
+  }
+
+  .marquee-set span {
+    background: linear-gradient(180deg, rgba(255,245,212,1), rgba(244,216,120,0.9));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  [data-theme="light"] .marquee-set span {
+    background: none;
+    -webkit-text-fill-color: #7a5c10;
+    color: #7a5c10;
+  }
+
+  .marquee-set i {
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px solid currentColor;
+    transform: rotate(45deg);
+    opacity: 0.65;
+    box-shadow: 0 0 22px rgba(212,175,55,0.18);
+  }
+
+  @keyframes marquee-flow {
+    0% { transform: translateX(0); }
+    to { transform: translateX(-33.333%); }
+  }
+
+  .principle-card,
+  .program-card,
+  .journey-step,
+  .living-list article,
+  .gallery-item,
+  .motif-card {
+    transition:
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .principle-card:hover,
+  .program-card:hover,
+  .journey-step:hover,
+  .living-list article:hover,
+  .motif-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px -16px rgba(0, 0, 0, 0.3);
+  }
+  .gallery-item:hover {
+    transform: scale(1.02);
+  }
+
+  #about {
+    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 620px) {
+    .marquee-track { animation-duration: 26s; }
+  }
+
+
+  .section-shell {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(5rem, 13vh, 10rem) clamp(1.25rem, 5vw, 3rem);
+    background: var(--color-ink-2);
+  }
+
+  .section-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at center, rgba(212, 175, 55, 0.06) 0 1.5px, transparent 1.6px),
+      radial-gradient(circle at center, rgba(212, 175, 55, 0.03) 0 1px, transparent 1.1px),
+      linear-gradient(90deg, rgba(246, 241, 233, 0.035) 1px, transparent 1px),
+      linear-gradient(rgba(246, 241, 233, 0.025) 1px, transparent 1px);
+    background-size: 38px 38px, 38px 38px, 90px 90px, 90px 90px;
+    background-position: 0 0, 19px 19px, 0 0, 0 0;
+    -webkit-mask-image: radial-gradient(90% 70% at 50% 20%, #000 0%, transparent 78%);
+    mask-image: radial-gradient(90% 70% at 50% 20%, #000 0%, transparent 78%);
+    opacity: 0.65;
+  }
+  [data-theme="light"] .section-shell::before {
+    background:
+      radial-gradient(circle at center, rgba(42, 39, 34, 0.06) 0 1.5px, transparent 1.6px),
+      radial-gradient(circle at center, rgba(42, 39, 34, 0.03) 0 1px, transparent 1.1px),
+      linear-gradient(90deg, rgba(42, 39, 34, 0.035) 1px, transparent 1px),
+      linear-gradient(rgba(42, 39, 34, 0.025) 1px, transparent 1px);
+    background-size: 38px 38px, 38px 38px, 90px 90px, 90px 90px;
+    background-position: 0 0, 19px 19px, 0 0, 0 0;
+    -webkit-mask-image: radial-gradient(90% 70% at 50% 20%, #000 0%, transparent 78%);
+    mask-image: radial-gradient(90% 70% at 50% 20%, #000 0%, transparent 78%);
+    opacity: 0.65;
+  }
+
+  .section-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-kicker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: clamp(1.2rem, 2.8vw, 2rem);
+  }
+
+  .section-num {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 3vw, 2.6rem);
+    font-style: italic;
+    color: rgba(212, 175, 55, 0.34);
+  }
+
+  .section-title {
+    max-width: 13ch;
+    font-size: clamp(1.8rem, 4.5vw, 3.8rem);
+    font-weight: 400;
+    line-height: 1.06;
+    letter-spacing: 0;
+    font-variation-settings: "opsz" 144, "SOFT" 35;
+  }
+
+  .section-title span {
+    color: #f4d878;
+    background: linear-gradient(120deg, #fff1bd, var(--color-gold) 54%, var(--color-bronze));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: italic;
+    font-weight: 700;
+  }
+
+  [data-reveal],
+  [data-reveal-group] > * {
+    opacity: 0;
+    transform: translateY(50px) scale(0.96);
+    filter: blur(12px);
+    transition:
+      opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  [data-reveal].is-in,
+  [data-reveal-group].is-in > * {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+
+  [data-reveal-group].is-in > *:nth-child(2) { transition-delay: 0.1s; }
+  [data-reveal-group].is-in > *:nth-child(3) { transition-delay: 0.2s; }
+  [data-reveal-group].is-in > *:nth-child(4) { transition-delay: 0.3s; }
+  [data-reveal-group].is-in > *:nth-child(5) { transition-delay: 0.4s; }
+  [data-reveal-group].is-in > *:nth-child(6) { transition-delay: 0.5s; }
+
+  .vision {
+    background:
+      radial-gradient(90% 75% at 8% 8%, rgba(15, 138, 107, 0.11), transparent 62%),
+      linear-gradient(180deg, var(--color-ink-2), var(--color-ink-3));
+  }
+  [data-theme="light"] .vision {
+    background:
+      radial-gradient(90% 75% at 8% 8%, rgba(26, 138, 107, 0.06), transparent 62%),
+      linear-gradient(180deg, var(--color-ink-2), var(--color-ink-3));
+  }
+
+  .vision-copy,
+  .guardian-grid,
+  .programs-inner,
+  .motif-inner,
+  .living-inner,
+  .collab-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+
+  .vision-copy {
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    align-items: end;
+  }
+
+  .vision-copy .t-lead {
+    max-width: 38ch;
+  }
+
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: clamp(3rem, 7vw, 5.5rem);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+  }
+
+  .principle-card,
+  .program-card,
+  .living-list article {
+    padding: clamp(1.4rem, 3vw, 2.4rem);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+  }
+
+  .principle-card {
+    min-height: 280px;
+  }
+
+  .principle-num {
+    display: block;
+    margin-bottom: clamp(2.5rem, 8vw, 5rem);
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--color-gold);
+  }
+
+  .principle-card h3,
+  .journey-step h3,
+  .program-card h3,
+  .motif-card h3 {
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.25rem, 2vw, 1.7rem);
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .principle-card p,
+  .journey-step p,
+  .program-card p,
+  .motif-card p {
+    color: var(--color-ivory-dim);
+    line-height: 1.7;
+    font-size: 0.98rem;
+  }
+
+  .guardians {
+    background:
+      radial-gradient(80% 70% at 82% 22%, rgba(212, 175, 55, 0.12), transparent 60%),
+      var(--color-ink-2);
+  }
+  [data-theme="light"] .guardians {
+    background:
+      radial-gradient(80% 70% at 82% 22%, rgba(200, 150, 14, 0.06), transparent 60%),
+      var(--color-ink-2);
+  }
+
+  .guardian-grid {
+    grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .guardian-visual {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    background: var(--color-ink);
+  }
+
+  .guardian-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, transparent 45%, rgba(9, 9, 9, 0.68)),
+      radial-gradient(80% 60% at 50% 20%, transparent 20%, rgba(9, 9, 9, 0.35));
+  }
+
+  .guardian-visual img,
+  .gallery-item img,
+  .motif-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.95) contrast(1.08);
+  }
+
+  .visual-badge {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--glass-border);
+    background: rgba(9, 9, 9, 0.48);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    color: var(--color-ivory);
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2.6vw, 2rem);
+    font-style: italic;
+  }
+
+  [data-theme="light"] .visual-badge {
+    color: #f6f1e9;
+  }
+
+  .guardian-copy .section-title {
+    max-width: 12ch;
+    margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
+  }
+
+  .guardian-copy .t-body {
+    max-width: 48ch;
+  }
+
+  .trait-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .trait-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 64px;
+    padding: 1rem;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--color-ivory-dim);
+  }
+
+  .trait-list span {
+    width: 8px;
+    height: 8px;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background: var(--color-emerald);
+    box-shadow: 0 0 18px rgba(15, 138, 107, 0.8);
+  }
+
+  .journey {
+    background:
+      linear-gradient(180deg, var(--color-ink-2), var(--color-ink-2) 52%, var(--color-ink-3));
+  }
+  [data-theme="light"] .journey {
+    background:
+      radial-gradient(80% 60% at 8% 50%, rgba(26, 138, 107, 0.04), transparent 60%),
+      linear-gradient(180deg, var(--color-ink-2), var(--color-ink-3));
+  }
+
+  .journey-head {
+    display: flex;
+    justify-content: space-between;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: end;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .journey-head .t-body {
+    max-width: 34ch;
+  }
+
+  .journey-line {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .journey-line::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1.1rem;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.55), rgba(15, 138, 107, 0.35));
+  }
+
+  .journey-step {
+    position: relative;
+    padding-top: 3.4rem;
+  }
+
+  .journey-step::before {
+    content: "";
+    position: absolute;
+    top: 0.72rem;
+    left: 0;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 999px;
+    background: #f4d878;
+    box-shadow: 0 0 24px rgba(212, 175, 55, 0.75);
+  }
+
+  .step-phase,
+  .program-card span,
+  .living-list span {
+    display: inline-flex;
+    margin-bottom: 1rem;
+    color: var(--color-gold);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .programs {
+    background:
+      radial-gradient(80% 80% at 12% 22%, rgba(15, 138, 107, 0.12), transparent 65%),
+      var(--color-ink-2);
+  }
+  [data-theme="light"] .programs {
+    background:
+      radial-gradient(80% 80% at 12% 22%, rgba(26, 138, 107, 0.05), transparent 65%),
+      var(--color-ink-2);
+  }
+
+  .programs-title {
+    position: sticky;
+    top: 7rem;
+    align-self: start;
+  }
+
+  .program-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .program-card {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .motif-lab {
+    background:
+      radial-gradient(80% 60% at 80% 10%, rgba(212, 175, 55, 0.12), transparent 64%),
+      var(--color-ink-3);
+  }
+  [data-theme="light"] .motif-lab {
+    background:
+      radial-gradient(80% 60% at 80% 10%, rgba(200, 150, 14, 0.06), transparent 64%),
+      var(--color-ink-3);
+  }
+
+  .motif-inner {
+    align-items: end;
+  }
+
+  .motif-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .motif-card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1rem;
+    align-items: center;
+    min-height: 140px;
+    padding: 0.75rem;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+  }
+  [data-theme="light"] .motif-card {
+    background: rgba(42, 39, 34, 0.12);
+  }
+
+  .motif-card img {
+    aspect-ratio: 1;
+    min-height: 120px;
+  }
+
+  .living {
+    background:
+      linear-gradient(180deg, var(--color-ink-3), var(--color-ink-2));
+  }
+  [data-theme="light"] .living {
+    background:
+      radial-gradient(60% 80% at 80% 50%, rgba(200, 150, 14, 0.04), transparent 60%),
+      linear-gradient(180deg, var(--color-ink-3), var(--color-ink-2));
+  }
+
+  .living-inner {
+    align-items: center;
+  }
+
+  .living-list {
+    display: grid;
+    gap: 1px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+  }
+
+  .living-list article {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 1rem;
+    align-items: start;
+    border: 0;
+  }
+
+  .living-list p {
+    color: var(--color-ivory-dim);
+    font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+    line-height: 1.55;
+  }
+
+  .gallery {
+    background:
+      radial-gradient(90% 80% at 80% 20%, rgba(212, 175, 55, 0.1), transparent 65%),
+      var(--color-ink-3);
+  }
+  [data-theme="light"] .gallery {
+    background:
+      radial-gradient(90% 80% at 80% 20%, rgba(200, 150, 14, 0.05), transparent 65%),
+      var(--color-ink-3);
+  }
+
+  .gallery-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: clamp(2rem, 5vw, 4rem);
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .gallery-head .section-title {
+    margin-top: 1rem;
+    max-width: 15ch;
+  }
+
+  .gallery-head .t-body {
+    max-width: 34ch;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr 0.9fr 1.1fr;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .gallery-item {
+    position: relative;
+    min-height: clamp(240px, 34vw, 430px);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    background: var(--color-ink);
+  }
+
+  .gallery-item:nth-child(2),
+  .gallery-item:nth-child(3) {
+    margin-top: clamp(2rem, 5vw, 4rem);
+  }
+
+  .gallery-item img {
+    transition: transform 1.2s var(--ease-lux);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.06);
+  }
+
+  /* ===== Logo Philosophy ===== */
+  .logo-philosophy {
+    background:
+      radial-gradient(70% 60% at 20% 10%, rgba(212, 175, 55, 0.12), transparent 65%),
+      radial-gradient(70% 60% at 90% 80%, rgba(15, 138, 107, 0.10), transparent 62%),
+      var(--color-ink-3);
+  }
+
+  .logo-philosophy-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .logo-philosophy-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(1.8rem, 6vw, 5rem);
+    align-items: center;
+    margin-top: clamp(2rem, 5vw, 3.2rem);
+  }
+
+  .logo-philosophy-copy .t-lead {
+    max-width: 44ch;
+    margin-top: 1.2rem;
+  }
+
+  .logo-philosophy-copy .t-body {
+    margin-top: 1.2rem;
+    max-width: 54ch;
+  }
+
+  .logo-philosophy-display {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: clamp(1.2rem, 2.6vw, 2rem);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+  }
+
+  .logo-display-frame {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background:
+      radial-gradient(70% 70% at 50% 10%, rgba(212, 175, 55, 0.20), transparent 60%),
+      linear-gradient(180deg, rgba(246, 241, 233, 0.05), transparent);
+    pointer-events: none;
+  }
+
+  .logo-philosophy-display img {
+    width: min(320px, 80%);
+    height: auto;
+    z-index: 1;
+    filter: drop-shadow(0 18px 50px rgba(0,0,0,0.75));
+  }
+
+  .logo-display-caption {
+    position: relative;
+    z-index: 1;
+    margin-top: 1rem;
+    color: var(--color-ivory-dim);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+    text-align: center;
+  }
+
+  .gallery-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 52%, rgba(9, 9, 9, 0.74));
+  }
+
+  .gallery-item figcaption {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 1;
+    color: var(--color-ivory);
+    font-family: var(--font-serif);
+    font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+    font-style: italic;
+  }
+
+  .collaboration {
+    background:
+      radial-gradient(70% 70% at 15% 0%, rgba(15, 138, 107, 0.13), transparent 60%),
+      var(--color-ink-2);
+  }
+  [data-theme="light"] .collaboration {
+    background:
+      radial-gradient(70% 70% at 15% 0%, rgba(26, 138, 107, 0.05), transparent 60%),
+      var(--color-ink-2);
+  }
+
+  .collab-copy {
+    position: sticky;
+    top: 7rem;
+    align-self: start;
+  }
+
+  .collab-copy .section-title {
+    margin: 1rem 0 1.4rem;
+  }
+
+  .collab-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+  }
+  [data-theme="light"] .collab-form {
+    background: rgba(248, 246, 243, 0.8);
+  }
+
+  .collab-form label {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .collab-form span {
+    color: var(--color-ivory-dim);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .collab-form input,
+  .collab-form select,
+  .collab-form textarea {
+    width: 100%;
+    border: 1px solid var(--glass-border);
+    border-radius: 0;
+    background: var(--glass-bg);
+    padding: 0.95rem 1rem;
+    color: var(--color-ivory);
+    outline: none;
+    transition: border-color 0.3s var(--ease-lux), background 0.3s var(--ease-lux);
+  }
+
+  .collab-form textarea {
+    resize: vertical;
+    min-height: 132px;
+  }
+
+  .collab-form input:focus,
+  .collab-form select:focus,
+  .collab-form textarea:focus {
+    border-color: var(--color-gold);
+    background: var(--glass-bg);
+  }
+
+  .field-wide,
+  .collab-submit {
+    grid-column: 1 / -1;
+  }
+
+  .collab-submit,
+  .modal-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 52px;
+    padding: 0.95rem 1.4rem;
+    border: 1px solid rgba(212, 175, 55, 0.28);
+    background: linear-gradient(135deg, #f4d878, var(--color-gold) 58%, var(--color-bronze));
+    color: #261a05;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .partnership {
+    padding-bottom: 0;
+    background:
+      radial-gradient(80% 70% at 50% 0%, rgba(212, 175, 55, 0.08), transparent 62%),
+      radial-gradient(70% 70% at 80% 80%, rgba(15, 138, 107, 0.07), transparent 60%),
+      var(--color-ink-3);
+  }
+  [data-theme="light"] .partnership {
+    background:
+      radial-gradient(80% 70% at 50% 0%, rgba(200, 150, 14, 0.04), transparent 62%),
+      radial-gradient(70% 70% at 80% 80%, rgba(26, 138, 107, 0.03), transparent 60%),
+      var(--color-ink-3);
+  }
+  .partnership-inner {
+    padding-bottom: clamp(2rem, 4vh, 3rem);
+  }
+  .partnership-title {
+    max-width: 18ch;
+  }
+  .partnership-desc {
+    max-width: 48ch;
+    margin-top: 1rem;
+  }
+  .partnership-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 1.5vw, 2rem);
+    padding: clamp(2rem, 4vh, 3rem) 0;
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  }
+  [data-theme="light"] .partnership-grid {
+    border-color: rgba(166, 124, 0, 0.1);
+  }
+  .partner-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4 / 3;
+    padding: 1.2rem;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    border-radius: 8px;
+    transition: transform 0.4s var(--ease-lux), box-shadow 0.4s var(--ease-lux), border-color 0.4s var(--ease-lux);
+  }
+  .partner-card:hover {
+    transform: scale(1.04);
+    border-color: rgba(212, 175, 55, 0.2);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.08);
+  }
+  [data-theme="light"] .partner-card {
+    background: rgba(42, 39, 34, 0.06);
+  }
+  [data-theme="light"] .partner-card:hover {
+    box-shadow: 0 0 30px rgba(122, 92, 16, 0.06);
+    border-color: rgba(122, 92, 16, 0.2);
+  }
+  .partner-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 1;
+    transition: transform 0.5s var(--ease-lux);
+  }
+  .partner-card:hover .partner-logo {
+    transform: scale(1.12);
+  }
+
+  @media (max-width: 800px) {
+    .partnership-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 400px) {
+    .partnership-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  /* ============ STRUKTUR ============ */
+  .structure {
+    background:
+      radial-gradient(60% 60% at 20% 10%, rgba(212, 175, 55, 0.08), transparent 60%),
+      radial-gradient(60% 60% at 80% 90%, rgba(15, 138, 107, 0.06), transparent 60%),
+      var(--color-ink);
+  }
+  [data-theme="light"] .structure {
+    background:
+      radial-gradient(60% 60% at 20% 10%, rgba(200, 150, 14, 0.04), transparent 60%),
+      radial-gradient(60% 60% at 80% 90%, rgba(26, 138, 107, 0.03), transparent 60%),
+      var(--color-ink);
+  }
+  .structure-title {
+    max-width: 16ch;
+  }
+  .structure-title span {
+    font-style: italic;
+    background: linear-gradient(135deg, #fbe7a2, var(--color-gold) 40%, #d4af37, #f4d878);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: goldShimmer 4s ease-in-out infinite alternate;
+  }
+  .structure-desc {
+    max-width: 48ch;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .org-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .org-node {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.4rem;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-radius: 8px;
+    font-family: var(--font-serif);
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+    color: var(--color-ivory);
+    white-space: nowrap;
+  }
+  .org-root {
+    padding: 0.8rem 2rem;
+    border-color: rgba(212, 175, 55, 0.3);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    font-weight: 600;
+    color: var(--color-gold);
+  }
+  .org-division-head {
+    border-color: rgba(212, 175, 55, 0.18);
+    font-style: italic;
+    font-weight: 500;
+  }
+  .org-line-v {
+    width: 1px;
+    height: 24px;
+    background: linear-gradient(to bottom, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.1));
+  }
+  .org-row {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    flex-wrap: wrap;
+  }
+  .org-spacer {
+    width: clamp(1.5rem, 4vw, 3rem);
+  }
+  .org-row-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.6rem, 1.5vw, 1rem);
+    width: 100%;
+  }
+  .org-division {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.8rem 0.6rem;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+    text-align: center;
+  }
+  .org-division-name {
+    font-family: var(--font-serif);
+    font-size: clamp(0.7rem, 0.9vw, 0.82rem);
+    color: var(--color-ivory);
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 0.35rem;
+  }
+  .org-sub {
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    opacity: 0.7;
+  }
+  .org-sub-sub {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ivory-dim);
+    opacity: 0.5;
+  }
+  @media (max-width: 700px) {
+    .org-row-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 450px) {
+    .org-row-grid {
+      grid-template-columns: 1fr;
+    }
+    .org-row {
+      flex-direction: column;
+      align-items: center;
+    }
+    .org-spacer { display: none; }
+  }
+  @keyframes goldShimmer {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+  }
+
+  .register {
+    padding-bottom: clamp(4rem, 10vh, 7rem);
+    background:
+      radial-gradient(70% 70% at 50% 12%, rgba(212, 175, 55, 0.15), transparent 62%),
+      radial-gradient(60% 60% at 10% 88%, rgba(15, 138, 107, 0.12), transparent 70%),
+      var(--color-ink);
+  }
+  [data-theme="light"] .register {
+    background:
+      radial-gradient(70% 70% at 50% 12%, rgba(200, 150, 14, 0.06), transparent 62%),
+      radial-gradient(60% 60% at 10% 88%, rgba(26, 138, 107, 0.05), transparent 70%),
+      var(--color-ink);
+  }
+
+  .register-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .register-inner .ornament-rule {
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .register-title {
+    max-width: 12ch;
+    margin-top: 1.1rem;
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5.5vw, 4.2rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: 0;
+    color: var(--color-ivory);
+  }
+
+  .register .t-lead {
+    max-width: 48ch;
+    margin-top: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  .register-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.9rem;
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .register-modal {
+    width: min(92vw, 540px);
+    margin: auto;
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    padding: clamp(1.5rem, 5vw, 2.2rem);
+    background:
+      radial-gradient(90% 60% at 50% 0%, rgba(212, 175, 55, 0.12), transparent 62%),
+      var(--color-ink-2);
+    color: var(--color-ivory);
+    box-shadow: 0 30px 90px -32px rgba(0, 0, 0, 0.95);
+    text-align: center;
+  }
+  [data-theme="light"] .register-modal {
+    background:
+      radial-gradient(90% 60% at 50% 0%, rgba(200, 150, 14, 0.06), transparent 62%),
+      var(--color-ink-2);
+    box-shadow: 0 20px 60px -24px rgba(0, 0, 0, 0.12);
+  }
+
+  .register-modal::backdrop {
+    background: rgba(0, 0, 0, 0.72);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .register-modal[open] {
+    animation: modal-in 0.55s var(--ease-lux);
+  }
+
+  @keyframes modal-in {
+    from { opacity: 0; transform: translateY(18px) scale(0.96); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--glass-border);
+    color: var(--color-ivory);
+  }
+
+  .modal-sigil {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 1.2rem;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    transform: rotate(45deg);
+  }
+
+  .register-modal h2 {
+    max-width: 14ch;
+    margin: 1rem auto;
+    font-size: clamp(1.6rem, 5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  .register-modal p {
+    max-width: 40ch;
+    margin: 0 auto;
+    color: var(--color-ivory-dim);
+    line-height: 1.6;
+  }
+
+  .modal-action {
+    margin: 1.6rem auto 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    /* ensure modal button itself centers */
+    max-width: 100%;
+  }
+
+
+  .register-modal .modal-action {
+    max-width: 320px;
+  }
+
+  /* Center alignment dialog CTA button */
+  .modal-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.6rem auto 0;
+    width: min(100%, 320px);
+  }
+
+.site-footer {
+
+    overflow: hidden;
+    padding: clamp(3rem, 8vh, 6rem) clamp(1.25rem, 5vw, 3rem) 1.5rem;
+    background:
+      linear-gradient(180deg, var(--color-ink), var(--color-ink-2));
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .footer-marquee {
+    display: flex;
+    gap: 2rem;
+    width: max-content;
+    margin-bottom: clamp(2rem, 6vw, 4rem);
+    color: rgba(212, 175, 55, 0.16);
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 9vw, 5.5rem);
+    line-height: 0.85;
+    white-space: nowrap;
+    animation: footer-drift 34s linear infinite;
+  }
+
+  @keyframes footer-drift {
+    to { transform: translateX(-25%); }
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .footer-brand-text {
+    display: grid;
+    justify-items: start;
+  }
+
+  .footer-brand-logo {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex: 0 0 auto;
+    transform: translateY(-0.4rem);
+  }
+
+  .footer-brand-logo img {
+    width: clamp(2.2rem, 5vw, 3.3rem);
+    height: auto;
+    filter: drop-shadow(0 18px 50px rgba(0, 0, 0, 0.75));
+  }
+
+  .footer-brand span {
+
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 6vw, 4rem);
+    font-style: italic;
+    line-height: 0.9;
+  }
+
+  .footer-brand strong {
+    color: #f4d878;
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 5.5vw, 3.4rem);
+    line-height: 0.95;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 1fr;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .footer-grid h3 {
+    margin-bottom: 0.9rem;
+    color: var(--color-gold);
+    font-family: var(--font-serif);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .footer-grid p,
+  .footer-grid a {
+    display: block;
+    color: var(--color-ivory-dim);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+.footer-grid a:hover {
+    color: var(--color-ivory);
+  }
+
+  .footer-credit {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.75rem;
+    justify-content: center;
+    align-items: baseline;
+    margin-top: clamp(2rem, 6vw, 3.2rem);
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--glass-border);
+    color: var(--color-ivory-dim);
+    font-size: 0.9rem;
+  }
+
+  .footer-credit a {
+    color: var(--color-gold);
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+
+@media (max-width: 980px) {
+    .logo-philosophy-grid { grid-template-columns: 1fr !important; }
+    .logo-philosophy-display { width: 100%; }
+
+
+    .vision-copy,
+    .guardian-grid,
+    .journey-head,
+    .programs-inner,
+    .motif-inner,
+    .living-inner,
+    .collab-inner,
+    .gallery-head {
+      grid-template-columns: 1fr;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .principle-grid,
+    .journey-line,
+    .program-grid,
+    .gallery-grid,
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .principle-card,
+    .program-card {
+      min-height: auto;
+    }
+
+    .principle-num {
+      margin-bottom: 2rem;
+    }
+
+    .guardian-visual {
+      width: 100%;
+      aspect-ratio: 16 / 11;
+    }
+
+    .journey-line {
+      gap: 0;
+      padding-left: 1.4rem;
+    }
+
+    .journey-line::before {
+      left: 0;
+      right: auto;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      height: auto;
+    }
+
+    .journey-step {
+      padding-top: 0;
+      padding-bottom: 2.4rem;
+    }
+
+    .journey-step::before {
+      top: 0.35rem;
+      left: -1.75rem;
+    }
+
+    .programs-title,
+    .collab-copy {
+      position: static;
+    }
+
+    .gallery-item,
+    .gallery-item:nth-child(2),
+    .gallery-item:nth-child(3) {
+      min-height: clamp(230px, 62vw, 420px);
+      margin-top: 0;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .section-shell {
+      padding: clamp(4rem, 11vh, 6rem) 1.1rem;
+    }
+    .logo-philosophy-copy { padding-bottom: 1.1rem; }
+    .footer-logo { width: 2.8rem; }
+
+
+    .section-title {
+      font-size: clamp(1.5rem, 9vw, 2.4rem);
+      max-width: 12ch;
+    }
+
+    .trait-list,
+    .collab-form {
+      grid-template-columns: 1fr;
+    }
+
+    .guardian-visual {
+      aspect-ratio: 4 / 5;
+    }
+
+    .motif-card {
+      grid-template-columns: 1fr;
+    }
+
+    .motif-card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+    }
+
+    .living-list article {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+
+    .register-actions {
+      width: 100%;
+      max-width: 300px;
+      flex-direction: column;
+    }
+
+    .register-actions :global(.btn) {
+      width: 100%;
+    }
+
+    .footer-marquee {
+      font-size: clamp(2rem, 14vw, 3.5rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track,
+    .footer-marquee,
+    [data-reveal],
+    [data-reveal-group] > *,
+    .gallery-item img {
+      animation: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const revealTargets = document.querySelectorAll<HTMLElement>(
+    "[data-reveal], [data-reveal-group]"
+  );
+
+  // ARIA live region for screen reader announcements
+  const liveRegion = document.createElement('div');
+  liveRegion.setAttribute('role', 'status');
+  liveRegion.setAttribute('aria-live', 'polite');
+  liveRegion.setAttribute('aria-atomic', 'true');
+  liveRegion.className = 'sr-only';
+  liveRegion.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0';
+  document.body.appendChild(liveRegion);
+
+  // Section-specific messages
+  const sectionMessages: Record<string, string> = {
+    'vision': 'Bagian Visi: Warisan yang berjalan, bukan hanya dikenang',
+    'guardians': 'Bagian Sang Penjaga: Hadir dengan wibawa, bergerak dengan makna',
+    'journey': 'Bagian Perjalanan: Dari rasa ingin tahu menuju panggung budaya',
+    'programs': 'Bagian Program: Ruang belajar yang membentuk rasa, suara, dan sikap',
+    'motif-lab': 'Bagian Arsip Motif: Setiap garis menyimpan alamat pulang',
+    'living': 'Bagian Pengalaman: Batik terasa hidup saat disentuh banyak tangan',
+    'logo-philosophy': 'Bagian Filosofi Logo: Logo yang berbicara lewat bentuk dan rasa',
+    'gallery': 'Bagian Galeri: Fragmen visual dari napas batik Surabaya',
+    'collaboration': 'Bagian Kolaborasi: Form pengajuan kolaborasi budaya',
+    'register': 'Bagian Pendaftaran: Saatnya membawa batik Surabaya dengan suara generasimu'
+  };
+
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const wasIn = entry.target.classList.contains('is-in');
+          entry.target.classList.toggle("is-in", entry.isIntersecting);
+          
+          // Announce newly revealed sections
+          if (entry.isIntersecting && !wasIn) {
+            const sectionId = entry.target.id || entry.target.closest('section')?.id;
+            if (sectionId && sectionMessages[sectionId]) {
+              liveRegion.textContent = sectionMessages[sectionId];
+            }
+          }
+        });
+      },
+      { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+    );
+
+    revealTargets.forEach((el) => io.observe(el));
+  } else {
+    revealTargets.forEach((el) => el.classList.add("is-in"));
+  }
+
+  const modal = document.getElementById("register-modal") as HTMLDialogElement | null;
+  const openers = document.querySelectorAll<HTMLElement>("[data-register-open]");
+  const closers = document.querySelectorAll<HTMLElement>("[data-register-close]");
+
+  openers.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (modal?.showModal) modal.showModal();
+    });
+  });
+
+  closers.forEach((button) => {
+    button.addEventListener("click", () => modal?.close());
+  });
+
+  modal?.addEventListener("click", (event) => {
+    if (event.target === modal) modal.close();
+  });
+
+  const form = document.getElementById("collab-form") as HTMLFormElement | null;
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const message = [
+      "Halo *Putera Puteri Batik Surabaya*, saya ingin mengajukan kolaborasi.",
+      "",
+      `Nama: ${data.get("nama")}`,
+      `Instansi/Komunitas: ${data.get("instansi")}`,
+      `Kontak WhatsApp: ${data.get("kontak")}`,
+      `Jenis Kolaborasi: ${data.get("jenis")}`,
+      `Pesan: ${data.get("pesan")}`,
+    ].join("\n");
+
+    window.location.href = `https://wa.me/6285707109853/?text=${encodeURIComponent(message)}`;
+  });
+</script>
