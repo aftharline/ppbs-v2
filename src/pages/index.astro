@@ -94,37 +94,182 @@ import Hero from "../components/Hero.astro";
 </script>
 
 <script>
-  const par = document.querySelectorAll<HTMLElement>("[data-parallax]");
-  if (par.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    let ticking = false;
-    window.addEventListener("scroll", () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          par.forEach((el) => {
-            const rect = el.getBoundingClientRect();
-            const spd = parseFloat(el.dataset.parallax || "0.15");
-            const y = rect.top * spd;
-            el.style.transform = `translateY(${y}px)`;
-          });
-          ticking = false;
-        });
-        ticking = true;
+import Lenis from 'lenis'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const liveRegion = document.createElement('div');
+liveRegion.setAttribute('role', 'status');
+liveRegion.setAttribute('aria-live', 'polite');
+liveRegion.setAttribute('aria-atomic', 'true');
+liveRegion.className = 'sr-only';
+liveRegion.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0';
+document.body.appendChild(liveRegion);
+
+const sectionMessages: Record<string, string> = {
+  'vision': 'Bagian Visi: Warisan yang berjalan, bukan hanya dikenang',
+  'guardians': 'Bagian Sang Penjaga: Hadir dengan wibawa, bergerak dengan makna',
+  'journey': 'Bagian Perjalanan: Dari rasa ingin tahu menuju panggung budaya',
+  'programs': 'Bagian Program: Ruang belajar yang membentuk rasa, suara, dan sikap',
+  'motif-lab': 'Bagian Arsip Motif: Setiap garis menyimpan alamat pulang',
+  'living': 'Bagian Pengalaman: Batik terasa hidup saat disentuh banyak tangan',
+  'logo-philosophy': 'Bagian Filosofi Logo: Logo yang berbicara lewat bentuk dan rasa',
+  'gallery': 'Bagian Galeri: Fragmen visual dari napas batik Surabaya',
+  'collaboration': 'Bagian Kolaborasi: Form pengajuan kolaborasi budaya',
+  'register': 'Bagian Pendaftaran: Saatnya membawa batik Surabaya dengan suara generasimu'
+};
+
+const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+if (!isReduced) {
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    orientation: 'vertical',
+    gestureOrientation: 'vertical',
+    smoothWheel: true,
+    smoothTouch: false,
+    touchMultiplier: 2,
+  })
+
+  lenis.on('scroll', ScrollTrigger.update)
+  gsap.ticker.add((time) => { lenis.raf(time * 1000) })
+  gsap.ticker.lagSmoothing(0)
+
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href')
+      if (href && href.length > 1) {
+        const target = document.querySelector(href)
+        if (target) {
+          e.preventDefault()
+          lenis.scrollTo(target, { offset: -60 })
+        }
       }
-    }, { passive: true });
+    })
+  })
+
+  const progressBar = document.getElementById('progress-bar')
+  if (progressBar) {
+    gsap.to(progressBar, {
+      scaleX: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: document.body,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.3,
+      },
+    })
   }
 
-  const revealEls = document.querySelectorAll<HTMLElement>("#about [data-reveal]");
-  if ("IntersectionObserver" in window && revealEls.length) {
-    const ro = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add("is-in");
-          ro.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    revealEls.forEach((el) => ro.observe(el));
-  } else {
-    revealEls.forEach((el) => el.classList.add("is-in"));
+  ScrollTrigger.batch('[data-reveal]', {
+    onEnter: (els) => els.forEach((el: HTMLElement) => {
+      el.classList.add('is-in')
+      const sectionId = el.id || el.closest('section')?.id
+      if (sectionId && sectionMessages[sectionId]) {
+        liveRegion.textContent = sectionMessages[sectionId]
+      }
+    }),
+    once: true,
+    start: 'top 88%',
+  })
+  ScrollTrigger.batch('[data-reveal-group]', {
+    onEnter: (els) => els.forEach((el: HTMLElement) => {
+      el.classList.add('is-in')
+      const sectionId = el.id || el.closest('section')?.id
+      if (sectionId && sectionMessages[sectionId]) {
+        liveRegion.textContent = sectionMessages[sectionId]
+      }
+    }),
+    once: true,
+    start: 'top 88%',
+  })
+
+  document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+    const speed = parseFloat(el.dataset.parallax || '0.15')
+    gsap.to(el, {
+      y: () => el.offsetHeight * (1 - speed) * -0.3,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      },
+    })
+  })
+
+  document.querySelectorAll<HTMLElement>('.section-title, .about-title, .register-title').forEach((title) => {
+    gsap.from(title, {
+      scrollTrigger: {
+        trigger: title,
+        start: 'top 88%',
+      },
+      y: 24,
+      opacity: 0,
+      duration: 0.7,
+      ease: 'power2.out',
+    })
+  })
+
+  const sections = document.querySelectorAll<HTMLElement>('section[id]')
+  const navLinks = document.querySelectorAll<HTMLElement>('[data-section-link]')
+  if (navLinks.length) {
+    const setActive = (id: string) => {
+      navLinks.forEach((link) => {
+        const href = link.getAttribute('href')
+        link.classList.toggle('is-active', href === `#${id}`)
+      })
+    }
+    sections.forEach((section) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 35%',
+        end: 'bottom 35%',
+        onEnter: () => setActive(section.id),
+        onEnterBack: () => setActive(section.id),
+      })
+    })
   }
+} else {
+  document.querySelectorAll('[data-reveal], [data-reveal-group]').forEach((el) => el.classList.add('is-in'))
+}
+
+// TiltedCard — spring physics 100% mirip React Bits (stiffness=100, damping=30, mass=2)
+;(() => {
+  if (isReduced) return
+  const card = document.getElementById('tilted-card')
+  if (!card) return
+  const inner = card.querySelector<HTMLElement>('.tilted-card-inner')
+  const isMobile = window.innerWidth < 768 || 'ontouchstart' in window
+  if (!inner || isMobile) return
+  const amp = 14
+  let targetRX = 0, targetRY = 0, targetScale = 1
+  const state = { rx: 0, ry: 0, sx: 1, vrx: 0, vry: 0, vsx: 0 }
+  const stf = 100, damp = 30, mass = 2
+  let prevTime = 0, raf = 0
+  function tick(time) {
+    if (!prevTime) prevTime = time
+    const dt = Math.min((time - prevTime) / 1000, 0.05)
+    prevTime = time
+    const arx = (targetRX - state.rx) * (stf / mass) - state.vrx * (damp / mass)
+    const ary = (targetRY - state.ry) * (stf / mass) - state.vry * (damp / mass)
+    const asx = (targetScale - state.sx) * (stf / mass) - state.vsx * (damp / mass)
+    state.vrx += arx * dt; state.vry += ary * dt; state.vsx += asx * dt
+    state.rx += state.vrx * dt; state.ry += state.vry * dt; state.sx += state.vsx * dt
+    inner.style.transform = `rotateX(${state.rx}deg) rotateY(${state.ry}deg) scale(${state.sx})`
+    raf = requestAnimationFrame(tick)
+  }
+  raf = requestAnimationFrame(tick)
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect()
+    targetRX = ((e.clientY - rect.top - rect.height / 2) / (rect.height / 2)) * -amp
+    targetRY = ((e.clientX - rect.left - rect.width / 2) / (rect.width / 2)) * amp
+  })
+  card.addEventListener('mouseenter', () => { targetScale = 1.06 })
+  card.addEventListener('mouseleave', () => { targetRX = 0; targetRY = 0; targetScale = 1 })
+})()
 </script>

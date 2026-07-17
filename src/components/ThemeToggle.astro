@@ -45,8 +45,8 @@
   .theme-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
   .theme-moon { opacity: 1; transform: none; }
 
-  [data-theme="light"] .theme-sun { opacity: 1; transform: none; }
-  [data-theme="light"] .theme-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+  :global([data-theme="light"]) .theme-sun { opacity: 1; transform: none; }
+  :global([data-theme="light"]) .theme-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
 
   @media (max-width: 768px) {
     .theme-toggle {

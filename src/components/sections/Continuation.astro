@@ -6,6 +6,7 @@
  */
 import GlassButton from "../ui/GlassButton.astro";
 import Ornament from "../ui/Ornament.astro";
+import CircularGallery from "../CircularGallery.astro";
 
 const principles = [
   {
@@ -88,11 +89,18 @@ const experiences = [
   "Panggung apresiasi untuk finalis dan alumni PPBS.",
 ];
 
-const gallery = [
-  { src: "/motif.webp", alt: "Visual batik bernuansa pembuka", label: "Motif", width: 1385, height: 924 },
-  { src: "/ragam.webp", alt: "Visual rangkaian batik Surabaya", label: "Ragam", width: 1385, height: 924 },
-  { src: "/detail.webp", alt: "Visual detail sekuens batik", label: "Detail", width: 1385, height: 924 },
-  { src: "/panggung.webp", alt: "Visual klimaks narasi batik", label: "Panggung", width: 1385, height: 924 },
+const galleryItems = [
+  { image: '/visuals/01.webp', text: 'Gelar Karya' },
+  { image: '/visuals/02.webp', text: 'Motif Klasik' },
+  { image: '/visuals/03.webp', text: 'Proses Kreatif' },
+  { image: '/visuals/04.webp', text: 'Detail Goresan' },
+  { image: '/visuals/05.webp', text: 'Kain Tradisi' },
+  { image: '/visuals/06.webp', text: 'Pewarnaan Alami' },
+  { image: '/visuals/07.webp', text: 'Sentuhan Akhir' },
+  { image: '/visuals/08.webp', text: 'Koleksi Unggul' },
+  { image: '/visuals/09.webp', text: 'Inspirasi Motif' },
+  { image: '/visuals/10.webp', text: 'Karya Lestari' },
+  { image: '/visuals/11.webp', text: 'Warisan Budaya' },
 ];
 ---
 
@@ -141,9 +149,14 @@ const gallery = [
 
 <section class="guardians section-shell" id="guardians">
   <div class="section-inner guardian-grid">
-    <div class="guardian-visual" data-reveal>
-      <img src="/figure.webp" alt="Sang Penjaga Batik Surabaya" loading="lazy" width="1385" height="924" />
-      <span class="visual-badge">Sang Penjaga</span>
+    <div class="guardian-visual" data-reveal id="tilted-card">
+      <div class="tilted-card-inner">
+        <img src="/figure.webp" alt="Sang Penjaga Batik Surabaya" loading="lazy" width="1385" height="924" />
+        <div class="tilted-card-gradient" aria-hidden="true"></div>
+        <div class="tilted-card-overlay">
+          <span class="visual-badge">Sang Penjaga</span>
+        </div>
+      </div>
     </div>
 
     <div class="guardian-copy">
@@ -333,14 +346,15 @@ const gallery = [
       </p>
     </div>
 
-    <div class="gallery-grid" data-reveal-group>
-      {gallery.map((item) => (
-        <figure class="gallery-item">
-          <img src={item.src} alt={item.alt} loading="lazy" width={item.width} height={item.height} />
-          <figcaption>{item.label}</figcaption>
-        </figure>
-      ))}
-    </div>
+    <CircularGallery
+      items={galleryItems}
+      bend={3}
+      textColor="#ffffff"
+      borderRadius={0.05}
+      font="italic 500 18px Fraunces"
+      scrollSpeed={2}
+      scrollEase={0.05}
+    />
   </div>
 </section>
 
@@ -401,7 +415,7 @@ const gallery = [
       Struktur <span>Kepengurusan</span>
     </h2>
     <p class="t-body structure-desc">
-      Susunan pengurus Paguyuban Putera Puteri Batik Surabaya yang menjadi tulang punggung gerakan budaya.
+      Susunan organisasi Putera Puteri Batik Surabaya yang menjadi tulang punggung gerakan budaya.
     </p>
     <div class="org-chart">
       <div class="org-node org-director">
@@ -609,9 +623,9 @@ const gallery = [
     background: linear-gradient(180deg, rgba(12,12,10,1), rgba(10,10,9,1));
     position: relative;
   }
-  [data-theme="light"] .marquee-band {
-    background: #ede6dc;
-    border-color: rgba(200, 150, 14, 0.2);
+  :global([data-theme="light"]) .marquee-band {
+    background: var(--color-ink-2);
+    border-color: rgba(184, 134, 11, 0.25);
   }
 
   .marquee-band::before {
@@ -659,10 +673,15 @@ const gallery = [
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  [data-theme="light"] .marquee-set span {
-    background: none;
-    -webkit-text-fill-color: #7a5c10;
-    color: #7a5c10;
+  :global([data-theme="light"]) .marquee-set {
+    color: #b8860b;
+    text-shadow: none;
+  }
+  :global([data-theme="light"]) .marquee-set span {
+    background: linear-gradient(135deg, #dfb840, #b8860b 50%, #8b6914);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .marquee-set i {
@@ -682,8 +701,7 @@ const gallery = [
   .principle-card,
   .program-card,
   .journey-step,
-  .living-list article,
-  .gallery-item {
+  .living-list article {
     transition:
       transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
       box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -694,9 +712,6 @@ const gallery = [
   .living-list article:hover {
     transform: translateY(-4px);
     box-shadow: 0 16px 48px -16px rgba(0, 0, 0, 0.3);
-  }
-  .gallery-item:hover {
-    transform: scale(1.02);
   }
 
   #about {
@@ -715,7 +730,7 @@ const gallery = [
   .section-shell {
     position: relative;
     overflow: hidden;
-    padding: clamp(5rem, 13vh, 10rem) clamp(1.25rem, 5vw, 3rem);
+    padding: clamp(3rem, 8vh, 5rem) clamp(1.25rem, 5vw, 3rem);
     background: var(--color-ink-2);
   }
 
@@ -735,17 +750,18 @@ const gallery = [
     mask-image: radial-gradient(90% 70% at 50% 20%, #000 0%, transparent 78%);
     opacity: 0.65;
   }
-  [data-theme="light"] .section-shell::before {
+  :global([data-theme="light"]) .section-shell::before {
     background:
-      radial-gradient(circle at center, rgba(42, 39, 34, 0.06) 0 1.5px, transparent 1.6px),
-      radial-gradient(circle at center, rgba(42, 39, 34, 0.03) 0 1px, transparent 1.1px),
-      linear-gradient(90deg, rgba(42, 39, 34, 0.035) 1px, transparent 1px),
-      linear-gradient(rgba(42, 39, 34, 0.025) 1px, transparent 1px);
-    background-size: 38px 38px, 38px 38px, 90px 90px, 90px 90px;
-    background-position: 0 0, 19px 19px, 0 0, 0 0;
-    -webkit-mask-image: radial-gradient(90% 70% at 50% 20%, #000 0%, transparent 78%);
-    mask-image: radial-gradient(90% 70% at 50% 20%, #000 0%, transparent 78%);
-    opacity: 0.65;
+      radial-gradient(circle at center, rgba(184, 134, 11, 0.1) 0 1.5px, transparent 1.6px),
+      radial-gradient(circle at center, rgba(184, 134, 11, 0.05) 0 1px, transparent 1.1px),
+      radial-gradient(circle at center, rgba(15, 138, 107, 0.04) 0 1.5px, transparent 1.6px),
+      linear-gradient(90deg, rgba(42, 39, 34, 0.05) 1px, transparent 1px),
+      linear-gradient(rgba(42, 39, 34, 0.05) 1px, transparent 1px);
+    background-size: 38px 38px, 38px 38px, 76px 76px, 90px 90px, 90px 90px;
+    background-position: 0 0, 19px 19px, 38px 38px, 0 0, 0 0;
+    -webkit-mask-image: none;
+    mask-image: none;
+    opacity: 1;
   }
 
   .section-inner {
@@ -759,23 +775,23 @@ const gallery = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: clamp(1.2rem, 2.8vw, 2rem);
+    gap: 0.8rem;
+    margin-bottom: clamp(0.8rem, 1.8vw, 1.2rem);
   }
 
   .section-num {
     font-family: var(--font-serif);
-    font-size: clamp(1.4rem, 3vw, 2.6rem);
+    font-size: clamp(1rem, 2vw, 1.5rem);
     font-style: italic;
     color: rgba(212, 175, 55, 0.34);
   }
 
   .section-title {
-    max-width: 13ch;
-    font-size: clamp(1.8rem, 4.5vw, 3.8rem);
+    max-width: 14ch;
+    font-size: clamp(1.4rem, 3vw, 2.4rem);
     font-weight: 400;
-    line-height: 1.06;
-    letter-spacing: 0;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
     font-variation-settings: "opsz" 144, "SOFT" 35;
   }
 
@@ -818,9 +834,9 @@ const gallery = [
       radial-gradient(90% 75% at 8% 8%, rgba(15, 138, 107, 0.11), transparent 62%),
       linear-gradient(180deg, var(--color-ink-2), var(--color-ink-3));
   }
-  [data-theme="light"] .vision {
+  :global([data-theme="light"]) .vision {
     background:
-      radial-gradient(90% 75% at 8% 8%, rgba(26, 138, 107, 0.06), transparent 62%),
+      radial-gradient(90% 75% at 8% 8%, rgba(15, 138, 107, 0.08), transparent 62%),
       linear-gradient(180deg, var(--color-ink-2), var(--color-ink-3));
   }
 
@@ -832,12 +848,12 @@ const gallery = [
   .collab-inner {
     display: grid;
     grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-    gap: clamp(2rem, 6vw, 5rem);
+    gap: clamp(1.5rem, 4vw, 3rem);
     align-items: start;
   }
 
   .vision-copy {
-    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.9fr);
     align-items: end;
   }
 
@@ -849,7 +865,7 @@ const gallery = [
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1px;
-    margin-top: clamp(3rem, 7vw, 5.5rem);
+    margin-top: clamp(2rem, 5vw, 3.5rem);
     border: 1px solid var(--glass-border);
     background: var(--glass-bg);
   }
@@ -857,20 +873,20 @@ const gallery = [
   .principle-card,
   .program-card,
   .living-list article {
-    padding: clamp(1.4rem, 3vw, 2.4rem);
+    padding: clamp(1.1rem, 2vw, 1.6rem);
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
   }
 
   .principle-card {
-    min-height: 280px;
+    min-height: 220px;
   }
 
   .principle-num {
     display: block;
-    margin-bottom: clamp(2.5rem, 8vw, 5rem);
+    margin-bottom: clamp(1.5rem, 5vw, 3rem);
     font-family: var(--font-serif);
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-style: italic;
     color: var(--color-gold);
   }
@@ -878,8 +894,8 @@ const gallery = [
   .principle-card h3,
   .journey-step h3,
   .program-card h3 {
-    margin-bottom: 0.75rem;
-    font-size: clamp(1.25rem, 2vw, 1.7rem);
+    margin-bottom: 0.5rem;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
     font-weight: 500;
     letter-spacing: 0;
   }
@@ -888,8 +904,8 @@ const gallery = [
   .journey-step p,
   .program-card p {
     color: var(--color-ivory-dim);
-    line-height: 1.7;
-    font-size: 0.98rem;
+    line-height: 1.65;
+    font-size: 0.85rem;
   }
 
   .guardians {
@@ -897,9 +913,9 @@ const gallery = [
       radial-gradient(80% 70% at 82% 22%, rgba(212, 175, 55, 0.12), transparent 60%),
       var(--color-ink-2);
   }
-  [data-theme="light"] .guardians {
+  :global([data-theme="light"]) .guardians {
     background:
-      radial-gradient(80% 70% at 82% 22%, rgba(200, 150, 14, 0.06), transparent 60%),
+      radial-gradient(80% 70% at 82% 22%, rgba(184, 134, 11, 0.1), transparent 60%),
       var(--color-ink-2);
   }
 
@@ -911,36 +927,53 @@ const gallery = [
   .guardian-visual {
     position: relative;
     aspect-ratio: 4 / 5;
-    overflow: hidden;
     border: 1px solid rgba(212, 175, 55, 0.22);
     background: var(--color-ink);
+    perspective: 800px;
   }
 
-  .guardian-visual::after {
-    content: "";
+  .tilted-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .tilted-card-inner img {
     position: absolute;
     inset: 0;
-    background:
-      linear-gradient(180deg, transparent 45%, rgba(9, 9, 9, 0.68)),
-      radial-gradient(80% 60% at 50% 20%, transparent 20%, rgba(9, 9, 9, 0.35));
-  }
-
-  .guardian-visual img,
-  .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     filter: saturate(0.95) contrast(1.08);
+    will-change: transform;
+    transform: translateZ(0);
+  }
+  .tilted-card-gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(180deg, transparent 45%, rgba(9, 9, 9, 0.68)),
+      radial-gradient(80% 60% at 50% 20%, transparent 20%, rgba(9, 9, 9, 0.35));
+    pointer-events: none;
+  }
+  .tilted-card-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+    pointer-events: none;
   }
 
   .visual-badge {
-    position: absolute;
-    left: 1rem;
-    right: 1rem;
-    bottom: 1rem;
-    z-index: 1;
     display: flex;
     justify-content: center;
+    width: 100%;
+    max-width: 300px;
     padding: 0.85rem 1rem;
     border: 1px solid var(--glass-border);
     background: rgba(9, 9, 9, 0.48);
@@ -952,13 +985,13 @@ const gallery = [
     font-style: italic;
   }
 
-  [data-theme="light"] .visual-badge {
+  :global([data-theme="light"]) .visual-badge {
     color: #f6f1e9;
   }
 
   .guardian-copy .section-title {
-    max-width: 12ch;
-    margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
+    max-width: 14ch;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
   }
 
   .guardian-copy .t-body {
@@ -968,16 +1001,16 @@ const gallery = [
   .trait-list {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.9rem;
-    margin-top: clamp(2rem, 4vw, 3rem);
+    gap: 0.7rem;
+    margin-top: clamp(1.4rem, 3vw, 2rem);
   }
 
   .trait-list li {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    min-height: 64px;
-    padding: 1rem;
+    gap: 0.6rem;
+    min-height: 52px;
+    padding: 0.8rem;
     border: 1px solid var(--glass-border);
     background: var(--glass-bg);
     color: var(--color-ivory-dim);
@@ -996,18 +1029,18 @@ const gallery = [
     background:
       linear-gradient(180deg, var(--color-ink-2), var(--color-ink-2) 52%, var(--color-ink-3));
   }
-  [data-theme="light"] .journey {
+  :global([data-theme="light"]) .journey {
     background:
-      radial-gradient(80% 60% at 8% 50%, rgba(26, 138, 107, 0.04), transparent 60%),
+      radial-gradient(80% 60% at 8% 50%, rgba(15, 138, 107, 0.06), transparent 60%),
       linear-gradient(180deg, var(--color-ink-2), var(--color-ink-3));
   }
 
   .journey-head {
     display: flex;
     justify-content: space-between;
-    gap: clamp(2rem, 6vw, 5rem);
+    gap: clamp(1.5rem, 4vw, 3rem);
     align-items: end;
-    margin-bottom: clamp(3rem, 6vw, 5rem);
+    margin-bottom: clamp(2rem, 4vw, 3rem);
   }
 
   .journey-head .t-body {
@@ -1018,7 +1051,7 @@ const gallery = [
     position: relative;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: clamp(1rem, 2vw, 1.5rem);
+    gap: clamp(0.8rem, 1.5vw, 1rem);
   }
 
   .journey-line::before {
@@ -1026,37 +1059,37 @@ const gallery = [
     position: absolute;
     left: 0;
     right: 0;
-    top: 1.1rem;
+    top: 0.85rem;
     height: 1px;
     background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.55), rgba(15, 138, 107, 0.35));
   }
 
   .journey-step {
     position: relative;
-    padding-top: 3.4rem;
+    padding-top: 2.4rem;
   }
 
   .journey-step::before {
     content: "";
     position: absolute;
-    top: 0.72rem;
+    top: 0.55rem;
     left: 0;
-    width: 0.8rem;
-    height: 0.8rem;
+    width: 0.6rem;
+    height: 0.6rem;
     border-radius: 999px;
     background: #f4d878;
-    box-shadow: 0 0 24px rgba(212, 175, 55, 0.75);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.65);
   }
 
   .step-phase,
   .program-card span,
   .living-list span {
     display: inline-flex;
-    margin-bottom: 1rem;
+    margin-bottom: 0.6rem;
     color: var(--color-gold);
-    font-size: 0.72rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: 0.24em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
   }
 
@@ -1065,9 +1098,9 @@ const gallery = [
       radial-gradient(80% 80% at 12% 22%, rgba(15, 138, 107, 0.12), transparent 65%),
       var(--color-ink-2);
   }
-  [data-theme="light"] .programs {
+  :global([data-theme="light"]) .programs {
     background:
-      radial-gradient(80% 80% at 12% 22%, rgba(26, 138, 107, 0.05), transparent 65%),
+      radial-gradient(80% 80% at 12% 22%, rgba(15, 138, 107, 0.08), transparent 65%),
       var(--color-ink-2);
   }
 
@@ -1085,7 +1118,7 @@ const gallery = [
   }
 
   .program-card {
-    min-height: 250px;
+    min-height: 180px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -1096,9 +1129,9 @@ const gallery = [
       radial-gradient(80% 60% at 80% 10%, rgba(212, 175, 55, 0.12), transparent 64%),
       var(--color-ink-3);
   }
-  [data-theme="light"] .motif-lab {
+  :global([data-theme="light"]) .motif-lab {
     background:
-      radial-gradient(80% 60% at 80% 10%, rgba(200, 150, 14, 0.06), transparent 64%),
+      radial-gradient(80% 60% at 80% 10%, rgba(184, 134, 11, 0.1), transparent 64%),
       var(--color-ink-3);
   }
 
@@ -1118,16 +1151,16 @@ const gallery = [
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
+    gap: 0.6rem;
     overflow: hidden;
     isolation: isolate;
-    padding: 1.4rem 2.8rem;
+    padding: 1rem 2rem;
     border: none;
-    border-radius: 20px;
+    border-radius: var(--radius-base);
     font-family: var(--font-sans);
-    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    font-size: clamp(0.82rem, 1.2vw, 0.92rem);
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     line-height: 1;
     color: #2a1d05;
@@ -1178,23 +1211,23 @@ const gallery = [
     gap: 0.75rem;
   }
   .archive-btn-icon {
-    width: 28px;
-    height: 28px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
     opacity: 0.9;
   }
   .archive-btn-label {
-    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-size: clamp(0.82rem, 1.2vw, 0.92rem);
     font-weight: 700;
     letter-spacing: 0.06em;
   }
   .archive-btn-arrow {
-    width: 22px;
-    height: 22px;
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
     transition: transform 0.5s var(--ease-lux);
   }
-  .archive-btn:hover .archive-btn-arrow { transform: translateX(6px); }
+  .archive-btn:hover .archive-btn-arrow { transform: translateX(4px); }
 
   .archive-modal {
     width: min(92vw, 540px);
@@ -1208,11 +1241,11 @@ const gallery = [
     box-shadow: 0 30px 90px -32px rgba(0, 0, 0, 0.95);
     text-align: center;
   }
-  [data-theme="light"] .archive-modal {
+  :global([data-theme="light"]) .archive-modal {
     background:
-      radial-gradient(90% 60% at 50% 0%, rgba(200, 150, 14, 0.06), transparent 62%),
+      radial-gradient(90% 60% at 50% 0%, rgba(184, 134, 11, 0.1), transparent 62%),
       var(--color-ink-2);
-    box-shadow: 0 20px 60px -24px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 20px 60px -24px rgba(0, 0, 0, 0.15);
   }
   .archive-modal::backdrop {
     background: rgba(0, 0, 0, 0.72);
@@ -1224,17 +1257,17 @@ const gallery = [
   }
   .archive-modal h2 {
     font-family: var(--font-serif);
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
     font-weight: 400;
-    margin: 1rem 0 0.8rem;
+    margin: 0.8rem 0 0.6rem;
     color: var(--color-ivory);
   }
   .archive-modal p {
-    font-size: clamp(0.9rem, 1.2vw, 1rem);
-    line-height: 1.7;
+    font-size: clamp(0.82rem, 1vw, 0.9rem);
+    line-height: 1.6;
     color: var(--color-ivory-dim);
     max-width: 40ch;
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 1.2rem;
   }
   .archive-modal .modal-action {
     display: inline-flex;
@@ -1258,9 +1291,9 @@ const gallery = [
     background:
       linear-gradient(180deg, var(--color-ink-3), var(--color-ink-2));
   }
-  [data-theme="light"] .living {
+  :global([data-theme="light"]) .living {
     background:
-      radial-gradient(60% 80% at 80% 50%, rgba(200, 150, 14, 0.04), transparent 60%),
+      radial-gradient(60% 80% at 80% 50%, rgba(184, 134, 11, 0.07), transparent 60%),
       linear-gradient(180deg, var(--color-ink-3), var(--color-ink-2));
   }
 
@@ -1277,72 +1310,16 @@ const gallery = [
 
   .living-list article {
     display: grid;
-    grid-template-columns: 72px 1fr;
-    gap: 1rem;
+    grid-template-columns: 56px 1fr;
+    gap: 0.8rem;
     align-items: start;
     border: 0;
   }
 
   .living-list p {
     color: var(--color-ivory-dim);
-    font-size: clamp(1.05rem, 1.6vw, 1.35rem);
-    line-height: 1.55;
-  }
-
-  .gallery {
-    background:
-      radial-gradient(90% 80% at 80% 20%, rgba(212, 175, 55, 0.1), transparent 65%),
-      var(--color-ink-3);
-  }
-  [data-theme="light"] .gallery {
-    background:
-      radial-gradient(90% 80% at 80% 20%, rgba(200, 150, 14, 0.05), transparent 65%),
-      var(--color-ink-3);
-  }
-
-  .gallery-head {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: clamp(2rem, 5vw, 4rem);
-    margin-bottom: clamp(2rem, 5vw, 3.5rem);
-  }
-
-  .gallery-head .section-title {
-    margin-top: 1rem;
-    max-width: 15ch;
-  }
-
-  .gallery-head .t-body {
-    max-width: 34ch;
-  }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr 0.9fr 1.1fr;
-    gap: 1rem;
-    align-items: stretch;
-  }
-
-  .gallery-item {
-    position: relative;
-    min-height: clamp(240px, 34vw, 430px);
-    overflow: hidden;
-    border: 1px solid var(--glass-border);
-    background: var(--color-ink);
-  }
-
-  .gallery-item:nth-child(2),
-  .gallery-item:nth-child(3) {
-    margin-top: clamp(2rem, 5vw, 4rem);
-  }
-
-  .gallery-item img {
-    transition: transform 1.2s var(--ease-lux);
-  }
-
-  .gallery-item:hover img {
-    transform: scale(1.06);
+    font-size: clamp(0.88rem, 1.2vw, 1rem);
+    line-height: 1.5;
   }
 
   /* ===== Logo Philosophy ===== */
@@ -1350,6 +1327,12 @@ const gallery = [
     background:
       radial-gradient(70% 60% at 20% 10%, rgba(212, 175, 55, 0.12), transparent 65%),
       radial-gradient(70% 60% at 90% 80%, rgba(15, 138, 107, 0.10), transparent 62%),
+      var(--color-ink-3);
+  }
+  :global([data-theme="light"]) .logo-philosophy {
+    background:
+      radial-gradient(70% 60% at 20% 10%, rgba(184, 134, 11, 0.1), transparent 65%),
+      radial-gradient(70% 60% at 90% 80%, rgba(15, 138, 107, 0.08), transparent 62%),
       var(--color-ink-3);
   }
 
@@ -1388,7 +1371,7 @@ const gallery = [
   .logo-display-frame {
     position: absolute;
     inset: 0;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     background:
       radial-gradient(70% 70% at 50% 10%, rgba(212, 175, 55, 0.20), transparent 60%),
       linear-gradient(180deg, rgba(246, 241, 233, 0.05), transparent);
@@ -1413,32 +1396,14 @@ const gallery = [
     text-align: center;
   }
 
-  .gallery-item::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 52%, rgba(9, 9, 9, 0.74));
-  }
-
-  .gallery-item figcaption {
-    position: absolute;
-    left: 1rem;
-    bottom: 1rem;
-    z-index: 1;
-    color: var(--color-ivory);
-    font-family: var(--font-serif);
-    font-size: clamp(1.2rem, 2.2vw, 1.8rem);
-    font-style: italic;
-  }
-
   .collaboration {
     background:
       radial-gradient(70% 70% at 15% 0%, rgba(15, 138, 107, 0.13), transparent 60%),
       var(--color-ink-2);
   }
-  [data-theme="light"] .collaboration {
+  :global([data-theme="light"]) .collaboration {
     background:
-      radial-gradient(70% 70% at 15% 0%, rgba(26, 138, 107, 0.05), transparent 60%),
+      radial-gradient(70% 70% at 15% 0%, rgba(15, 138, 107, 0.08), transparent 60%),
       var(--color-ink-2);
   }
 
@@ -1455,13 +1420,14 @@ const gallery = [
   .collab-form {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-    padding: clamp(1rem, 2.5vw, 1.5rem);
+    gap: 0.8rem;
+    padding: clamp(0.8rem, 2vw, 1.2rem);
     border: 1px solid var(--glass-border);
     background: var(--glass-bg);
   }
-  [data-theme="light"] .collab-form {
-    background: rgba(248, 246, 243, 0.8);
+  :global([data-theme="light"]) .collab-form {
+    background: rgba(232, 223, 208, 0.92);
+    border-color: rgba(42, 39, 34, 0.12);
   }
 
   .collab-form label {
@@ -1484,15 +1450,16 @@ const gallery = [
     border: 1px solid var(--glass-border);
     border-radius: 0;
     background: var(--glass-bg);
-    padding: 0.95rem 1rem;
+    padding: 0.75rem 0.85rem;
     color: var(--color-ivory);
     outline: none;
+    font-size: 0.88rem;
     transition: border-color 0.3s var(--ease-lux), background 0.3s var(--ease-lux);
   }
 
   .collab-form textarea {
     resize: vertical;
-    min-height: 132px;
+    min-height: 100px;
   }
 
   .collab-form input:focus,
@@ -1512,15 +1479,15 @@ const gallery = [
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
-    min-height: 52px;
-    padding: 0.95rem 1.4rem;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.75rem 1.2rem;
     border: 1px solid rgba(212, 175, 55, 0.28);
     background: linear-gradient(135deg, #f4d878, var(--color-gold) 58%, var(--color-bronze));
     color: #261a05;
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     font-weight: 800;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
@@ -1531,10 +1498,10 @@ const gallery = [
       radial-gradient(70% 70% at 80% 80%, rgba(15, 138, 107, 0.07), transparent 60%),
       var(--color-ink-3);
   }
-  [data-theme="light"] .partnership {
+  :global([data-theme="light"]) .partnership {
     background:
-      radial-gradient(80% 70% at 50% 0%, rgba(200, 150, 14, 0.04), transparent 62%),
-      radial-gradient(70% 70% at 80% 80%, rgba(26, 138, 107, 0.03), transparent 60%),
+      radial-gradient(80% 70% at 50% 0%, rgba(184, 134, 11, 0.08), transparent 62%),
+      radial-gradient(70% 70% at 80% 80%, rgba(15, 138, 107, 0.06), transparent 60%),
       var(--color-ink-3);
   }
   .partnership-inner {
@@ -1550,23 +1517,23 @@ const gallery = [
   .partnership-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: clamp(1rem, 1.5vw, 2rem);
-    padding: clamp(2rem, 4vh, 3rem) 0;
+    gap: clamp(0.6rem, 1vw, 1rem);
+    padding: clamp(1.5rem, 3vh, 2rem) 0;
     border-top: 1px solid rgba(212, 175, 55, 0.1);
     border-bottom: 1px solid rgba(212, 175, 55, 0.1);
   }
-  [data-theme="light"] .partnership-grid {
-    border-color: rgba(166, 124, 0, 0.1);
+  :global([data-theme="light"]) .partnership-grid {
+    border-color: rgba(184, 134, 11, 0.2);
   }
   .partner-card {
     display: flex;
     align-items: center;
     justify-content: center;
     aspect-ratio: 4 / 3;
-    padding: 1.2rem;
+    padding: 0.6rem;
     border: 1px solid var(--glass-border);
     background: var(--glass-bg);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .partner-card:hover {
@@ -1574,12 +1541,12 @@ const gallery = [
     border-color: rgba(212, 175, 55, 0.25);
     box-shadow: 0 0 40px rgba(212, 175, 55, 0.12);
   }
-  [data-theme="light"] .partner-card {
+  :global([data-theme="light"]) .partner-card {
     background: rgba(42, 39, 34, 0.06);
   }
-  [data-theme="light"] .partner-card:hover {
-    box-shadow: 0 0 40px rgba(122, 92, 16, 0.08);
-    border-color: rgba(122, 92, 16, 0.25);
+  :global([data-theme="light"]) .partner-card:hover {
+    box-shadow: 0 0 40px rgba(184, 134, 11, 0.12);
+    border-color: rgba(184, 134, 11, 0.3);
   }
   .partner-logo {
     width: 100%;
@@ -1613,10 +1580,10 @@ const gallery = [
       radial-gradient(60% 60% at 80% 90%, rgba(15, 138, 107, 0.06), transparent 60%),
       var(--color-ink);
   }
-  [data-theme="light"] .structure {
+  :global([data-theme="light"]) .structure {
     background:
-      radial-gradient(60% 60% at 20% 10%, rgba(200, 150, 14, 0.04), transparent 60%),
-      radial-gradient(60% 60% at 80% 90%, rgba(26, 138, 107, 0.03), transparent 60%),
+      radial-gradient(60% 60% at 20% 10%, rgba(184, 134, 11, 0.08), transparent 60%),
+      radial-gradient(60% 60% at 80% 90%, rgba(15, 138, 107, 0.06), transparent 60%),
       var(--color-ink);
   }
   .structure-title {
@@ -1789,16 +1756,16 @@ const gallery = [
   }
 
   .register {
-    padding-bottom: clamp(4rem, 10vh, 7rem);
+    padding-bottom: clamp(2.5rem, 6vh, 4rem);
     background:
       radial-gradient(70% 70% at 50% 12%, rgba(212, 175, 55, 0.15), transparent 62%),
       radial-gradient(60% 60% at 10% 88%, rgba(15, 138, 107, 0.12), transparent 70%),
       var(--color-ink);
   }
-  [data-theme="light"] .register {
+  :global([data-theme="light"]) .register {
     background:
-      radial-gradient(70% 70% at 50% 12%, rgba(200, 150, 14, 0.06), transparent 62%),
-      radial-gradient(60% 60% at 10% 88%, rgba(26, 138, 107, 0.05), transparent 70%),
+      radial-gradient(70% 70% at 50% 12%, rgba(184, 134, 11, 0.1), transparent 62%),
+      radial-gradient(60% 60% at 10% 88%, rgba(15, 138, 107, 0.08), transparent 70%),
       var(--color-ink);
   }
 
@@ -1814,27 +1781,27 @@ const gallery = [
   }
 
   .register-title {
-    max-width: 12ch;
-    margin-top: 1.1rem;
+    max-width: 14ch;
+    margin-top: 0.8rem;
     font-family: var(--font-serif);
-    font-size: clamp(2rem, 5.5vw, 4.2rem);
+    font-size: clamp(1.4rem, 3.5vw, 2.6rem);
     font-weight: 400;
-    line-height: 1.05;
-    letter-spacing: 0;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     color: var(--color-ivory);
   }
 
   .register .t-lead {
     max-width: 48ch;
-    margin-top: clamp(1.4rem, 3vw, 2rem);
+    margin-top: clamp(0.8rem, 2vw, 1.2rem);
   }
 
   .register-actions {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.9rem;
-    margin-top: clamp(2rem, 4vw, 3rem);
+    gap: 0.7rem;
+    margin-top: clamp(1.2rem, 3vw, 2rem);
   }
 
   .register-modal {
@@ -1849,11 +1816,11 @@ const gallery = [
     box-shadow: 0 30px 90px -32px rgba(0, 0, 0, 0.95);
     text-align: center;
   }
-  [data-theme="light"] .register-modal {
+  :global([data-theme="light"]) .register-modal {
     background:
-      radial-gradient(90% 60% at 50% 0%, rgba(200, 150, 14, 0.06), transparent 62%),
+      radial-gradient(90% 60% at 50% 0%, rgba(184, 134, 11, 0.1), transparent 62%),
       var(--color-ink-2);
-    box-shadow: 0 20px 60px -24px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 20px 60px -24px rgba(0, 0, 0, 0.15);
   }
 
   .register-modal::backdrop {
@@ -1892,17 +1859,18 @@ const gallery = [
   }
 
   .register-modal h2 {
-    max-width: 14ch;
-    margin: 1rem auto;
-    font-size: clamp(1.6rem, 5vw, 2.8rem);
+    max-width: 16ch;
+    margin: 0.8rem auto;
+    font-size: clamp(1.3rem, 3.5vw, 2rem);
     font-weight: 400;
-    line-height: 1.15;
+    line-height: 1.2;
   }
 
   .register-modal p {
-    max-width: 40ch;
+    max-width: 44ch;
     margin: 0 auto;
     color: var(--color-ivory-dim);
+    font-size: 0.88rem;
     line-height: 1.6;
   }
 
@@ -1934,7 +1902,7 @@ const gallery = [
 .site-footer {
 
     overflow: hidden;
-    padding: clamp(3rem, 8vh, 6rem) clamp(1.25rem, 5vw, 3rem) 1.5rem;
+    padding: clamp(2.5rem, 6vh, 4rem) clamp(1.25rem, 5vw, 3rem) 1.2rem;
     background:
       linear-gradient(180deg, var(--color-ink), var(--color-ink-2));
     border-top: 1px solid var(--glass-border);
@@ -1942,12 +1910,12 @@ const gallery = [
 
   .footer-marquee {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     width: max-content;
-    margin-bottom: clamp(2rem, 6vw, 4rem);
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
     color: rgba(212, 175, 55, 0.16);
     font-family: var(--font-serif);
-    font-size: clamp(2.4rem, 9vw, 5.5rem);
+    font-size: clamp(1.8rem, 6vw, 3.2rem);
     line-height: 0.85;
     white-space: nowrap;
     animation: footer-drift 34s linear infinite;
@@ -1966,8 +1934,8 @@ const gallery = [
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 1.5rem;
-    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+    gap: 1.2rem;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
   }
 
   .footer-brand-text {
@@ -1992,7 +1960,7 @@ const gallery = [
   .footer-brand span {
 
     font-family: var(--font-serif);
-    font-size: clamp(1.8rem, 6vw, 4rem);
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
     font-style: italic;
     line-height: 0.9;
   }
@@ -2000,24 +1968,24 @@ const gallery = [
   .footer-brand strong {
     color: #f4d878;
     font-family: var(--font-serif);
-    font-size: clamp(1.5rem, 5.5vw, 3.4rem);
+    font-size: clamp(1.2rem, 3.5vw, 2rem);
     line-height: 0.95;
   }
 
   .footer-grid {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr 1fr;
-    gap: clamp(1.5rem, 5vw, 4rem);
-    padding-top: 1.4rem;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding-top: 1rem;
     border-top: 1px solid var(--glass-border);
   }
 
   .footer-grid h3 {
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.6rem;
     color: var(--color-gold);
     font-family: var(--font-serif);
-    font-size: 0.78rem;
-    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
   }
 
@@ -2025,8 +1993,8 @@ const gallery = [
   .footer-grid a {
     display: block;
     color: var(--color-ivory-dim);
-    font-size: 0.95rem;
-    line-height: 1.8;
+    font-size: 0.84rem;
+    line-height: 1.7;
   }
 
 .footer-grid a:hover {
@@ -2036,14 +2004,14 @@ const gallery = [
   .footer-credit {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem 0.75rem;
+    gap: 0.5rem 0.6rem;
     justify-content: center;
     align-items: baseline;
-    margin-top: clamp(2rem, 6vw, 3.2rem);
-    padding-top: 1.2rem;
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+    padding-top: 0.8rem;
     border-top: 1px solid var(--glass-border);
     color: var(--color-ivory-dim);
-    font-size: 0.9rem;
+    font-size: 0.82rem;
   }
 
   .footer-credit a {
@@ -2077,7 +2045,6 @@ const gallery = [
     .principle-grid,
     .journey-line,
     .program-grid,
-    .gallery-grid,
     .footer-grid {
       grid-template-columns: 1fr;
     }
@@ -2088,7 +2055,7 @@ const gallery = [
     }
 
     .principle-num {
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .guardian-visual {
@@ -2125,25 +2092,18 @@ const gallery = [
       position: static;
     }
 
-    .gallery-item,
-    .gallery-item:nth-child(2),
-    .gallery-item:nth-child(3) {
-      min-height: clamp(230px, 62vw, 420px);
-      margin-top: 0;
-    }
   }
 
   @media (max-width: 620px) {
     .section-shell {
-      padding: clamp(4rem, 11vh, 6rem) 1.1rem;
+      padding: clamp(2.5rem, 8vh, 4rem) 1.1rem;
     }
-    .logo-philosophy-copy { padding-bottom: 1.1rem; }
-    .footer-logo { width: 2.8rem; }
-
+    .logo-philosophy-copy { padding-bottom: 1rem; }
+    .footer-logo { width: 2.4rem; }
 
     .section-title {
-      font-size: clamp(1.5rem, 9vw, 2.4rem);
-      max-width: 12ch;
+      font-size: clamp(1.25rem, 6vw, 1.8rem);
+      max-width: 16ch;
     }
 
     .trait-list,
@@ -2157,12 +2117,12 @@ const gallery = [
 
     .living-list article {
       grid-template-columns: 1fr;
-      gap: 0.2rem;
+      gap: 0.15rem;
     }
 
     .register-actions {
       width: 100%;
-      max-width: 300px;
+      max-width: 280px;
       flex-direction: column;
     }
 
@@ -2171,7 +2131,7 @@ const gallery = [
     }
 
     .footer-marquee {
-      font-size: clamp(2rem, 14vw, 3.5rem);
+      font-size: clamp(1.4rem, 10vw, 2.4rem);
     }
   }
 
@@ -2179,8 +2139,7 @@ const gallery = [
     .marquee-track,
     .footer-marquee,
     [data-reveal],
-    [data-reveal-group] > *,
-    .gallery-item img {
+    [data-reveal-group] > * {
       animation: none;
       transition: none;
     }
@@ -2188,57 +2147,6 @@ const gallery = [
 </style>
 
 <script>
-  const revealTargets = document.querySelectorAll<HTMLElement>(
-    "[data-reveal], [data-reveal-group]"
-  );
-
-  // ARIA live region for screen reader announcements
-  const liveRegion = document.createElement('div');
-  liveRegion.setAttribute('role', 'status');
-  liveRegion.setAttribute('aria-live', 'polite');
-  liveRegion.setAttribute('aria-atomic', 'true');
-  liveRegion.className = 'sr-only';
-  liveRegion.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0';
-  document.body.appendChild(liveRegion);
-
-  // Section-specific messages
-  const sectionMessages: Record<string, string> = {
-    'vision': 'Bagian Visi: Warisan yang berjalan, bukan hanya dikenang',
-    'guardians': 'Bagian Sang Penjaga: Hadir dengan wibawa, bergerak dengan makna',
-    'journey': 'Bagian Perjalanan: Dari rasa ingin tahu menuju panggung budaya',
-    'programs': 'Bagian Program: Ruang belajar yang membentuk rasa, suara, dan sikap',
-    'motif-lab': 'Bagian Arsip Motif: Setiap garis menyimpan alamat pulang',
-    'living': 'Bagian Pengalaman: Batik terasa hidup saat disentuh banyak tangan',
-    'logo-philosophy': 'Bagian Filosofi Logo: Logo yang berbicara lewat bentuk dan rasa',
-    'gallery': 'Bagian Galeri: Fragmen visual dari napas batik Surabaya',
-    'collaboration': 'Bagian Kolaborasi: Form pengajuan kolaborasi budaya',
-    'register': 'Bagian Pendaftaran: Saatnya membawa batik Surabaya dengan suara generasimu'
-  };
-
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const wasIn = entry.target.classList.contains('is-in');
-          entry.target.classList.toggle("is-in", entry.isIntersecting);
-          
-          // Announce newly revealed sections
-          if (entry.isIntersecting && !wasIn) {
-            const sectionId = entry.target.id || entry.target.closest('section')?.id;
-            if (sectionId && sectionMessages[sectionId]) {
-              liveRegion.textContent = sectionMessages[sectionId];
-            }
-          }
-        });
-      },
-      { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
-    );
-
-    revealTargets.forEach((el) => io.observe(el));
-  } else {
-    revealTargets.forEach((el) => el.classList.add("is-in"));
-  }
-
   const modal = document.getElementById("register-modal") as HTMLDialogElement | null;
   const openers = document.querySelectorAll<HTMLElement>("[data-register-open]");
   const closers = document.querySelectorAll<HTMLElement>("[data-register-close]");
